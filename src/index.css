@@ -1,13 +1,85 @@
+@font-face {
+  font-family: vazir;
+  src: url(/statics/fonts/Vazir-Thin.ttf);
+  font-weight: 100;
+}
+@font-face {
+  font-family: vazir;
+  src: url(/statics/fonts/Vazir-Light.ttf);
+  font-weight: 300;
+}
+@font-face {
+  font-family: vazir;
+  src: url(/statics/fonts/Vazir-Medium.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: vazir;
+  src: url(/statics/fonts/Vazir-Regular.ttf);
+  font-weight: 500;
+}
+@font-face {
+  font-family: vazir;
+  src: url(/statics/fonts/Vazir-Bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: vazir;
+  src: url(/statics/fonts/Vazir-Black.ttf);
+  font-weight: 900;
+}
+html {
+  min-height: 100vh;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  padding: 0;
+  font-family: vazir, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: vazir;
+  background-color: #f3f4f6 !important;
+  color: #052c49;
+  min-height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+div#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1919px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1279px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 599px) {
+  html {
+    font-size: 12px;
+  }
 }
