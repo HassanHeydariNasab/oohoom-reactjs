@@ -1,26 +1,38 @@
-import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Typography, Button, Card, TextField } from '@material-ui/core'
 
-function slide_class(index, slideFadeIn, slideFadeOut, slideDisplayFlex) {
-  return `slide ${slideFadeIn === index ? 'fade-in' : ''} ${
-    slideFadeOut === index ? 'fade-out' : ''
-  } ${slideDisplayFlex === index ? 'display-flex' : ''}`
+import { Button, Card, TextField, Typography } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import {
+  slideDisplayFlexAction,
+  slideFadeInAction,
+  slideFadeOutAction
+} from '../../../redux/actions/slide'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { codeAction } from '../../../redux/actions/api'
+import { setMobileAction } from '../../../redux/actions/authentication'
+
+function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
+  return `slide ${slideFadeIn === name ? 'fade-in' : ''} ${
+    slideFadeOut === name ? 'fade-out' : ''
+  } ${slideDisplayFlex === name ? 'display-flex' : ''}`
 }
 
 function Authentication() {
-  const [slideFadeOut, setSlideFadeOut] = useState(0)
-  const [slideFadeIn, setSlideFadeIn] = useState(1)
-  const [slideDisplayFlex, setSlideDisplayFlex] = useState(1)
-  // const [slideFadeOut, setSlideFadeOut] = useState(1)
-  // const [slideFadeIn, setSlideFadeIn] = useState(0)
-  // const [slideDisplayFlex, setSlideDisplayFlex] = useState(0)
   useEffect(() => {}, [])
+  const dispatch = useDispatch()
+  const authenticationState = useSelector(state => state.authentication)
+
   return (
     <Card id="center-card">
       <div
-        id="slide_0"
-        className={slide_class(0, slideFadeIn, slideFadeOut, slideDisplayFlex)}
+        id="start"
+        className={slide_class(
+          'start',
+          authenticationState.slide_fade_in,
+          authenticationState.slide_fade_out,
+          authenticationState.slide_display_flex
+        )}
       >
         <Typography variant="h1">oohoom</Typography>
         <Typography variant="h4" align="center">
@@ -29,13 +41,13 @@ function Authentication() {
         <Button
           variant="outlined"
           onClick={e => {
-            setSlideFadeOut(0)
-            setSlideFadeIn(-1)
+            dispatch(slideFadeOutAction('start'))
+            dispatch(slideFadeInAction('nothing'))
             setTimeout(() => {
-              setSlideDisplayFlex(1)
+              dispatch(slideDisplayFlexAction('code'))
             }, 1000)
             setTimeout(() => {
-              setSlideFadeIn(1)
+              dispatch(slideFadeInAction('code'))
             }, 1300)
           }}
           size="large"
@@ -45,8 +57,13 @@ function Authentication() {
         </Button>
       </div>
       <div
-        id="slide_1"
-        className={slide_class(1, slideFadeIn, slideFadeOut, slideDisplayFlex)}
+        id="code"
+        className={slide_class(
+          'code',
+          authenticationState.slide_fade_in,
+          authenticationState.slide_fade_out,
+          authenticationState.slide_display_flex
+        )}
       >
         <Typography variant="h2" align="center">
           mobile verification
@@ -55,18 +72,16 @@ function Authentication() {
           label="mobile"
           helperText="ex: 00989389742591"
           style={{ marginTop: '5rem' }}
+          value={authenticationState.mobile}
+          onChange={e => {
+            console.warn(e, e.target.value)
+            dispatch(setMobileAction(e.target.value))
+          }}
         />
         <Button
-          variant="outlined"
+          variant="contained"
           onClick={e => {
-            setSlideFadeOut(1)
-            setSlideFadeIn(-1)
-            setTimeout(() => {
-              setSlideDisplayFlex(2)
-            }, 1000)
-            setTimeout(() => {
-              setSlideFadeIn(2)
-            }, 1300)
+            dispatch(codeAction(authenticationState.mobile))
           }}
           size="large"
           style={{ marginTop: '10rem' }}
@@ -75,8 +90,13 @@ function Authentication() {
         </Button>
       </div>
       <div
-        id="slide_2"
-        className={slide_class(2, slideFadeIn, slideFadeOut, slideDisplayFlex)}
+        id="login"
+        className={slide_class(
+          'login',
+          authenticationState.slide_fade_in,
+          authenticationState.slide_fade_out,
+          authenticationState.slide_display_flex
+        )}
       >
         <Typography variant="h2">Login</Typography>
         <TextField
@@ -85,17 +105,8 @@ function Authentication() {
           style={{ marginTop: '5rem' }}
         />
         <Button
-          variant="outlined"
-          onClick={e => {
-            setSlideFadeOut(2)
-            setSlideFadeIn(-1)
-            setTimeout(() => {
-              setSlideDisplayFlex(3)
-            }, 1000)
-            setTimeout(() => {
-              setSlideFadeIn(3)
-            }, 1300)
-          }}
+          variant="contained"
+          onClick={e => {}}
           size="large"
           style={{ marginTop: '10rem' }}
         >
@@ -103,8 +114,13 @@ function Authentication() {
         </Button>
       </div>
       <div
-        id="slide_3"
-        className={slide_class(3, slideFadeIn, slideFadeOut, slideDisplayFlex)}
+        id="register"
+        className={slide_class(
+          'register',
+          authenticationState.slide_fade_in,
+          authenticationState.slide_fade_out,
+          authenticationState.slide_display_flex
+        )}
       >
         <Typography variant="h2">Register</Typography>
         <TextField
@@ -118,7 +134,7 @@ function Authentication() {
           style={{ marginTop: '2rem' }}
         />
         <Button
-          variant="outlined"
+          variant="contained"
           onClick={e => {}}
           size="large"
           style={{ marginTop: '10rem' }}
