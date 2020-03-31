@@ -90,7 +90,7 @@ function Authentication() {
           helperText={
             authenticationState.errors
               ? authenticationState.errors.mobile
-              : 'ex: 00989389742591'
+              : 'example:00989389742591'
           }
           style={{ marginTop: '5rem' }}
           variant="outlined"
@@ -101,6 +101,13 @@ function Authentication() {
             dispatch(clearErrorsAction())
           }}
           error={Boolean(authenticationState.errors)}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              dispatch(codeAction(authenticationState.mobile))
+              dispatch(setLoadingAction(true))
+            }
+          }}
+          type="tel"
         />
         <Button
           variant="contained"
@@ -131,7 +138,7 @@ function Authentication() {
           style={{ marginTop: '5rem' }}
           helperText={
             authenticationState.errors
-              ? authenticationState.errors
+              ? authenticationState.errors.code
               : 'code you recieved'
           }
           variant="outlined"
@@ -142,11 +149,25 @@ function Authentication() {
             dispatch(clearErrorsAction())
           }}
           error={Boolean(authenticationState.errors)}
+          type="number"
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              dispatch(
+                tokenAction(
+                  authenticationState.mobile,
+                  authenticationState.code
+                )
+              )
+              dispatch(setLoadingAction(true))
+            }
+          }}
         />
         <Button
           variant="contained"
           onClick={e => {
-            dispatch(tokenAction(authenticationState.mobile, authenticationState.code))
+            dispatch(
+              tokenAction(authenticationState.mobile, authenticationState.code)
+            )
             dispatch(setLoadingAction(true))
           }}
           disabled={authenticationState.loading}
