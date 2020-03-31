@@ -1,4 +1,8 @@
-import { SET_LOADING, SET_MOBILE } from '../constants'
+import {
+  CLEAR_ERRORS,
+  SET_LOADING,
+  SET_MOBILE
+} from '../constants/authentication'
 
 export const setMobileAction = mobile => ({
   type: SET_MOBILE,
@@ -12,4 +16,8 @@ export const setLoadingAction = is_loading => ({
   payload: {
     is_loading
   }
+})
+
+export const clearErrorsAction = () => ({
+  type: CLEAR_ERRORS
 })

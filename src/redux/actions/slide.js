@@ -1,4 +1,8 @@
-import { SLIDE_DISPLAY_FLEX, SLIDE_FADE_IN, SLIDE_FADE_OUT } from '../constants'
+import {
+  SLIDE_DISPLAY_FLEX,
+  SLIDE_FADE_IN,
+  SLIDE_FADE_OUT
+} from '../constants/authentication'
 export const slideFadeInAction = name => ({
   type: SLIDE_FADE_IN,
   payload: { name }

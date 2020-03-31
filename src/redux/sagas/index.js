@@ -1,4 +1,4 @@
-import { CODE_ERROR, CODE_SUCCESS } from '../constants'
+import { CODE_ERROR, CODE_SUCCESS } from '../constants/api'
 import {
   all,
   call,
@@ -30,11 +30,11 @@ export default function* root() {
     yield delay(1000)
     if (authenticationState.is_user_exists) {
       yield put(slideDisplayFlexAction('login'))
-      yield delay(1300)
+      yield delay(300)
       yield put(slideFadeInAction('login'))
     } else {
       yield put(slideDisplayFlexAction('register'))
-      yield delay(1300)
+      yield delay(300)
       yield put(slideFadeInAction('register'))
     }
     yield put(setLoadingAction(false))

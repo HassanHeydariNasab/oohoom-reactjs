@@ -1,12 +1,12 @@
 import {
-  CODE_ERROR,
-  CODE_SUCCESS,
+  CLEAR_ERRORS,
   SET_LOADING,
   SET_MOBILE,
   SLIDE_DISPLAY_FLEX,
   SLIDE_FADE_IN,
   SLIDE_FADE_OUT
-} from '../constants'
+} from '../constants/authentication'
+import { CODE_ERROR, CODE_SUCCESS } from '../constants/api'
 
 const initial = {
   mobile: '',
@@ -17,7 +17,8 @@ const initial = {
   is_user_exists: false,
   slide_fade_in: 'start',
   slide_fade_out: 'nothing',
-  slide_display_flex: 'start'
+  slide_display_flex: 'start',
+  errors: null
 }
 
 export default (state = initial, action) => {
@@ -29,7 +30,7 @@ export default (state = initial, action) => {
       }
     case CODE_ERROR:
       console.warn(JSON.stringify(action.error.data))
-      return { ...state }
+      return { ...state, errors: action.error.data.description }
     case SLIDE_FADE_IN:
       return { ...state, slide_fade_in: action.payload.name }
     case SLIDE_FADE_OUT:
@@ -39,7 +40,9 @@ export default (state = initial, action) => {
     case SET_MOBILE:
       return { ...state, mobile: action.payload.mobile }
     case SET_LOADING:
-      return {...state, loading: action.payload.is_loading}
+      return { ...state, loading: action.payload.is_loading }
+    case CLEAR_ERRORS:
+      return { ...state, errors: null }
     default:
       return state
   }

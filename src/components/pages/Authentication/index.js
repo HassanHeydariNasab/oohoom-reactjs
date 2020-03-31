@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import {
+  clearErrorsAction,
   setLoadingAction,
   setMobileAction
 } from '../../../redux/actions/authentication'
@@ -86,12 +87,20 @@ function Authentication() {
         </Typography>
         <TextField
           label="mobile"
-          helperText="ex: 00989389742591"
+          helperText={
+            authenticationState.errors
+              ? authenticationState.errors.mobile
+              : 'ex: 00989389742591'
+          }
           style={{ marginTop: '5rem' }}
+          variant="outlined"
+          fullWidth
           value={authenticationState.mobile}
           onChange={e => {
             dispatch(setMobileAction(e.target.value))
+            dispatch(clearErrorsAction())
           }}
+          error={Boolean(authenticationState.errors)}
         />
         <Button
           variant="contained"
@@ -102,7 +111,7 @@ function Authentication() {
           disabled={authenticationState.loading}
           size="large"
           style={{ marginTop: '10rem' }}
-          color='primary'
+          color="primary"
         >
           Send me a sms
         </Button>

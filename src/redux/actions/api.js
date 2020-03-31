@@ -1,4 +1,4 @@
-import { CODE } from '../constants'
+import { CODE } from '../constants/api'
 export const codeAction = mobile => ({
   type: CODE,
   request: {
