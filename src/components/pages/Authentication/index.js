@@ -1,7 +1,18 @@
 import './index.css'
 
-import { Button, Card, TextField, Typography } from '@material-ui/core'
+import {
+  Button,
+  Card,
+  LinearProgress,
+  TextField,
+  Typography,
+  makeStyles
+} from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import {
+  setLoadingAction,
+  setMobileAction
+} from '../../../redux/actions/authentication'
 import {
   slideDisplayFlexAction,
   slideFadeInAction,
@@ -10,7 +21,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { codeAction } from '../../../redux/actions/api'
-import { setMobileAction } from '../../../redux/actions/authentication'
 
 function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
   return `slide ${slideFadeIn === name ? 'fade-in' : ''} ${
@@ -25,6 +35,12 @@ function Authentication() {
 
   return (
     <Card id="center-card">
+      <LinearProgress
+        variant="indeterminate"
+        style={{ width: '100%', position: 'fixed', top: '1rem' }}
+        color="primary"
+        hidden={!authenticationState.loading}
+      />
       <div
         id="start"
         className={slide_class(
@@ -74,7 +90,6 @@ function Authentication() {
           style={{ marginTop: '5rem' }}
           value={authenticationState.mobile}
           onChange={e => {
-            console.warn(e, e.target.value)
             dispatch(setMobileAction(e.target.value))
           }}
         />
@@ -82,9 +97,12 @@ function Authentication() {
           variant="contained"
           onClick={e => {
             dispatch(codeAction(authenticationState.mobile))
+            dispatch(setLoadingAction(true))
           }}
+          disabled={authenticationState.loading}
           size="large"
           style={{ marginTop: '10rem' }}
+          color='primary'
         >
           Send me a sms
         </Button>
