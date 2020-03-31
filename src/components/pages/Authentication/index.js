@@ -11,17 +11,17 @@ import {
 import React, { useEffect, useState } from 'react'
 import {
   clearErrorsAction,
+  setCodeAction,
   setLoadingAction,
   setMobileAction
 } from '../../../redux/actions/authentication'
+import { codeAction, tokenAction } from '../../../redux/actions/api'
 import {
   slideDisplayFlexAction,
   slideFadeInAction,
   slideFadeOutAction
 } from '../../../redux/actions/slide'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { codeAction } from '../../../redux/actions/api'
 
 function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
   return `slide ${slideFadeIn === name ? 'fade-in' : ''} ${
@@ -128,14 +128,31 @@ function Authentication() {
         <Typography variant="h2">Login</Typography>
         <TextField
           label="code"
-          helperText="code you recieved"
           style={{ marginTop: '5rem' }}
+          helperText={
+            authenticationState.errors
+              ? authenticationState.errors
+              : 'code you recieved'
+          }
+          variant="outlined"
+          fullWidth
+          value={authenticationState.code}
+          onChange={e => {
+            dispatch(setCodeAction(e.target.value))
+            dispatch(clearErrorsAction())
+          }}
+          error={Boolean(authenticationState.errors)}
         />
         <Button
           variant="contained"
-          onClick={e => {}}
+          onClick={e => {
+            dispatch(tokenAction(authenticationState.mobile, authenticationState.code))
+            dispatch(setLoadingAction(true))
+          }}
+          disabled={authenticationState.loading}
           size="large"
           style={{ marginTop: '10rem' }}
+          color="primary"
         >
           Login
         </Button>

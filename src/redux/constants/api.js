@@ -1,3 +1,6 @@
 export const CODE = 'CODE'
 export const CODE_SUCCESS = 'CODE_SUCCESS'
 export const CODE_ERROR = 'CODE_ERROR'
+export const TOKEN = 'TOKEN'
+export const TOKEN_SUCCESS = 'TOKEN_SUCCESS'
+export const TOKEN_ERROR = 'TOKEN_ERROR'
