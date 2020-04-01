@@ -46,7 +46,7 @@ function Authentication() {
   const authenticationState = useSelector(state => state.authentication)
 
   return (
-    <Card id="center-card">
+    <div id="center-card">
       <LinearProgress
         variant="indeterminate"
         style={{ width: '100%', position: 'fixed', top: '1rem' }}
@@ -79,7 +79,7 @@ function Authentication() {
             }, 1300)
           }}
           size="large"
-          style={{ marginTop: '10rem' }}
+          style={{ marginTop: '5rem' }}
         >
           Start
         </Button>
@@ -96,43 +96,43 @@ function Authentication() {
         <Typography variant="h2" align="center">
           mobile verification
         </Typography>
-        <TextField
-          label="mobile"
-          helperText={
-            authenticationState.errors?.mobile
-              ? authenticationState.errors.mobile
-              : 'example:00989389742591'
-          }
-          style={{ marginTop: '5rem' }}
-          variant="outlined"
-          fullWidth
-          value={authenticationState.mobile}
-          onChange={e => {
-            dispatch(setMobileAction(e.target.value))
-            dispatch(clearErrorsAction())
-          }}
-          error={Boolean(authenticationState.errors?.mobile)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              dispatch(codeAction(authenticationState.mobile))
-              dispatch(setLoadingAction(true))
-            }
-          }}
-          type="tel"
-        />
-        <Button
-          variant="contained"
-          onClick={e => {
+        <form
+          autoComplete="off"
+          action="javascript:;"
+          onSubmit={e => {
             dispatch(codeAction(authenticationState.mobile))
             dispatch(setLoadingAction(true))
           }}
-          disabled={authenticationState.loading}
-          size="large"
-          style={{ marginTop: '10rem' }}
-          color="primary"
         >
-          Send me a sms
-        </Button>
+          <TextField
+            label="mobile"
+            helperText={
+              authenticationState.errors?.mobile
+                ? authenticationState.errors.mobile
+                : 'example:00989389742591'
+            }
+            style={{ marginTop: '5rem' }}
+            variant="outlined"
+            fullWidth
+            value={authenticationState.mobile}
+            onChange={e => {
+              dispatch(setMobileAction(e.target.value))
+              dispatch(clearErrorsAction())
+            }}
+            error={Boolean(authenticationState.errors?.mobile)}
+            type="tel"
+          />
+          <Button
+            variant="contained"
+            disabled={authenticationState.loading}
+            size="large"
+            style={{ marginTop: '5rem' }}
+            color="primary"
+            type="submit"
+          >
+            Send me a sms
+          </Button>
+        </form>
       </div>
       <div
         id="login"
@@ -144,50 +144,45 @@ function Authentication() {
         )}
       >
         <Typography variant="h2">Login</Typography>
-        <TextField
-          label="code"
-          style={{ marginTop: '5rem' }}
-          helperText={
-            authenticationState.errors?.code
-              ? authenticationState.errors.code
-              : 'code you recieved'
-          }
-          variant="outlined"
-          fullWidth
-          value={authenticationState.code}
-          onChange={e => {
-            dispatch(setCodeAction(e.target.value))
-            dispatch(clearErrorsAction())
-          }}
-          error={Boolean(authenticationState.errors?.code)}
-          type="number"
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              dispatch(
-                tokenAction(
-                  authenticationState.mobile,
-                  authenticationState.code
-                )
-              )
-              dispatch(setLoadingAction(true))
-            }
-          }}
-        />
-        <Button
-          variant="contained"
-          onClick={e => {
+        <form
+          autoComplete="off"
+          action="javascript:;"
+          onSubmit={e => {
             dispatch(
               tokenAction(authenticationState.mobile, authenticationState.code)
             )
             dispatch(setLoadingAction(true))
           }}
-          disabled={authenticationState.loading}
-          size="large"
-          style={{ marginTop: '10rem' }}
-          color="primary"
         >
-          Login
-        </Button>
+          <TextField
+            label="code"
+            style={{ marginTop: '5rem' }}
+            helperText={
+              authenticationState.errors?.code
+                ? authenticationState.errors.code
+                : 'code you recieved'
+            }
+            variant="outlined"
+            fullWidth
+            value={authenticationState.code}
+            onChange={e => {
+              dispatch(setCodeAction(e.target.value))
+              dispatch(clearErrorsAction())
+            }}
+            error={Boolean(authenticationState.errors?.code)}
+            type="number"
+          />
+          <Button
+            variant="contained"
+            disabled={authenticationState.loading}
+            size="large"
+            style={{ marginTop: '5rem' }}
+            color="primary"
+            type="submit"
+          >
+            Login
+          </Button>
+        </form>
       </div>
       <div
         id="register"
@@ -199,75 +194,10 @@ function Authentication() {
         )}
       >
         <Typography variant="h2">Register</Typography>
-        <TextField
-          label="code"
-          style={{ marginTop: '5rem' }}
-          helperText={
-            authenticationState.errors?.code
-              ? authenticationState.errors.code
-              : 'code you recieved'
-          }
-          variant="outlined"
-          fullWidth
-          value={authenticationState.code}
-          onChange={e => {
-            dispatch(setCodeAction(e.target.value))
-            dispatch(clearErrorsAction())
-          }}
-          error={Boolean(authenticationState.errors?.code)}
-          type="number"
-        />
-        <TextField
-          label="name"
-          style={{ marginTop: '5rem' }}
-          helperText={
-            authenticationState.errors?.name
-              ? authenticationState.errors.name[0]
-              : 'valid: lowercase letters, numbers and _'
-          }
-          variant="outlined"
-          fullWidth
-          value={authenticationState.name}
-          onChange={e => {
-            dispatch(setNameAction(e.target.value))
-            dispatch(clearErrorsAction())
-          }}
-          error={Boolean(authenticationState.errors?.name)}
-        />
-
-        <FormControl
-          component="fieldset"
-          style={{
-            alignSelf: 'flex-start',
-            marginTop: '5rem',
-            marginLeft: '1rem'
-          }}
-        >
-          <FormLabel component="legend">I'm an</FormLabel>
-          <RadioGroup
-            aria-label="role"
-            name="role"
-            value={authenticationState.role}
-            onChange={e => {
-              dispatch(setRoleAction(e.target.value))
-            }}
-          >
-            <FormControlLabel
-              value="employee"
-              control={<Radio />}
-              label="Employee"
-            />
-            <FormControlLabel
-              value="employer"
-              control={<Radio />}
-              label="Employer"
-            />
-          </RadioGroup>
-        </FormControl>
-
-        <Button
-          variant="contained"
-          onClick={e => {
+        <form
+          autoComplete="off"
+          action="javascript:;"
+          onSubmit={e => {
             dispatch(
               registrationAction(
                 authenticationState.mobile,
@@ -280,15 +210,86 @@ function Authentication() {
             )
             dispatch(setLoadingAction(true))
           }}
-          disabled={authenticationState.loading}
-          size="large"
-          style={{ marginTop: '10rem' }}
-          color="primary"
         >
-          Register
-        </Button>
+          <TextField
+            label="code"
+            style={{ marginTop: '5rem' }}
+            helperText={
+              authenticationState.errors?.code
+                ? authenticationState.errors.code
+                : 'code you recieved'
+            }
+            variant="outlined"
+            fullWidth
+            value={authenticationState.code}
+            onChange={e => {
+              dispatch(setCodeAction(e.target.value))
+              dispatch(clearErrorsAction())
+            }}
+            error={Boolean(authenticationState.errors?.code)}
+            type="number"
+          />
+          <TextField
+            label="name"
+            style={{ marginTop: '5rem' }}
+            helperText={
+              authenticationState.errors?.name
+                ? authenticationState.errors.name[0]
+                : 'valid: lowercase letters, numbers and _'
+            }
+            variant="outlined"
+            fullWidth
+            value={authenticationState.name}
+            onChange={e => {
+              dispatch(setNameAction(e.target.value))
+              dispatch(clearErrorsAction())
+            }}
+            error={Boolean(authenticationState.errors?.name)}
+          />
+
+          <FormControl
+            component="fieldset"
+            style={{
+              alignSelf: 'flex-start',
+              marginTop: '5rem',
+              marginLeft: '1rem'
+            }}
+          >
+            <FormLabel component="legend">I'm an</FormLabel>
+            <RadioGroup
+              aria-label="role"
+              name="role"
+              value={authenticationState.role}
+              onChange={e => {
+                dispatch(setRoleAction(e.target.value))
+              }}
+            >
+              <FormControlLabel
+                value="employee"
+                control={<Radio />}
+                label="Employee"
+              />
+              <FormControlLabel
+                value="employer"
+                control={<Radio />}
+                label="Employer"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          <Button
+            variant="contained"
+            disabled={authenticationState.loading}
+            size="large"
+            style={{ marginTop: '5rem' }}
+            color="primary"
+            type="submit"
+          >
+            Register
+          </Button>
+        </form>
       </div>
-    </Card>
+    </div>
   )
 }
 
