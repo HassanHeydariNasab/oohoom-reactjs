@@ -1,6 +1,8 @@
 import {
   CODE_ERROR,
   CODE_SUCCESS,
+  REGISTRATION_ERROR,
+  REGISTRATION_SUCCESS,
   TOKEN_ERROR,
   TOKEN_SUCCESS
 } from '../constants/api'
@@ -49,7 +51,6 @@ export default function* root() {
     yield put(setLoadingAction(false))
   })
   yield takeEvery(TOKEN_SUCCESS, function*() {
-    const authenticationState = yield select(state => state.authentication)
     yield put(slideFadeOutAction('login'))
     yield put(slideFadeInAction('nothing'))
     yield delay(1000)
@@ -59,6 +60,19 @@ export default function* root() {
     yield put(setLoadingAction(false))
   })
   yield takeEvery(TOKEN_ERROR, function*() {
+    yield delay(1000)
+    yield put(setLoadingAction(false))
+  })
+  yield takeEvery(REGISTRATION_SUCCESS, function*() {
+    yield put(slideFadeOutAction('register'))
+    yield put(slideFadeInAction('nothing'))
+    yield delay(1000)
+    yield put(slideDisplayFlexAction('start'))
+    yield delay(300)
+    yield put(slideFadeInAction('start'))
+    yield put(setLoadingAction(false))
+  })
+  yield takeEvery(REGISTRATION_ERROR, function*() {
     yield delay(1000)
     yield put(setLoadingAction(false))
   })

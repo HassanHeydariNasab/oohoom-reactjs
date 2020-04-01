@@ -3,7 +3,12 @@ import './index.css'
 import {
   Button,
   Card,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   LinearProgress,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
   makeStyles
@@ -13,9 +18,15 @@ import {
   clearErrorsAction,
   setCodeAction,
   setLoadingAction,
-  setMobileAction
+  setMobileAction,
+  setNameAction,
+  setRoleAction
 } from '../../../redux/actions/authentication'
-import { codeAction, tokenAction } from '../../../redux/actions/api'
+import {
+  codeAction,
+  registrationAction,
+  tokenAction
+} from '../../../redux/actions/api'
 import {
   slideDisplayFlexAction,
   slideFadeInAction,
@@ -88,7 +99,7 @@ function Authentication() {
         <TextField
           label="mobile"
           helperText={
-            authenticationState.errors
+            authenticationState.errors?.mobile
               ? authenticationState.errors.mobile
               : 'example:00989389742591'
           }
@@ -100,7 +111,7 @@ function Authentication() {
             dispatch(setMobileAction(e.target.value))
             dispatch(clearErrorsAction())
           }}
-          error={Boolean(authenticationState.errors)}
+          error={Boolean(authenticationState.errors?.mobile)}
           onKeyDown={e => {
             if (e.key === 'Enter') {
               dispatch(codeAction(authenticationState.mobile))
@@ -137,7 +148,7 @@ function Authentication() {
           label="code"
           style={{ marginTop: '5rem' }}
           helperText={
-            authenticationState.errors
+            authenticationState.errors?.code
               ? authenticationState.errors.code
               : 'code you recieved'
           }
@@ -148,7 +159,7 @@ function Authentication() {
             dispatch(setCodeAction(e.target.value))
             dispatch(clearErrorsAction())
           }}
-          error={Boolean(authenticationState.errors)}
+          error={Boolean(authenticationState.errors?.code)}
           type="number"
           onKeyDown={e => {
             if (e.key === 'Enter') {
@@ -190,19 +201,89 @@ function Authentication() {
         <Typography variant="h2">Register</Typography>
         <TextField
           label="code"
-          helperText="code you recieved"
           style={{ marginTop: '5rem' }}
+          helperText={
+            authenticationState.errors?.code
+              ? authenticationState.errors.code
+              : 'code you recieved'
+          }
+          variant="outlined"
+          fullWidth
+          value={authenticationState.code}
+          onChange={e => {
+            dispatch(setCodeAction(e.target.value))
+            dispatch(clearErrorsAction())
+          }}
+          error={Boolean(authenticationState.errors?.code)}
+          type="number"
         />
         <TextField
           label="name"
-          helperText="a unique name"
-          style={{ marginTop: '2rem' }}
+          style={{ marginTop: '5rem' }}
+          helperText={
+            authenticationState.errors?.name
+              ? authenticationState.errors.name[0]
+              : 'valid: lowercase letters, numbers and _'
+          }
+          variant="outlined"
+          fullWidth
+          value={authenticationState.name}
+          onChange={e => {
+            dispatch(setNameAction(e.target.value))
+            dispatch(clearErrorsAction())
+          }}
+          error={Boolean(authenticationState.errors?.name)}
         />
+
+        <FormControl
+          component="fieldset"
+          style={{
+            alignSelf: 'flex-start',
+            marginTop: '5rem',
+            marginLeft: '1rem'
+          }}
+        >
+          <FormLabel component="legend">I'm an</FormLabel>
+          <RadioGroup
+            aria-label="role"
+            name="role"
+            value={authenticationState.role}
+            onChange={e => {
+              dispatch(setRoleAction(e.target.value))
+            }}
+          >
+            <FormControlLabel
+              value="employee"
+              control={<Radio />}
+              label="Employee"
+            />
+            <FormControlLabel
+              value="employer"
+              control={<Radio />}
+              label="Employer"
+            />
+          </RadioGroup>
+        </FormControl>
+
         <Button
           variant="contained"
-          onClick={e => {}}
+          onClick={e => {
+            dispatch(
+              registrationAction(
+                authenticationState.mobile,
+                authenticationState.code,
+                authenticationState.name,
+                authenticationState.role,
+                // authenticationState.skills
+                []
+              )
+            )
+            dispatch(setLoadingAction(true))
+          }}
+          disabled={authenticationState.loading}
           size="large"
           style={{ marginTop: '10rem' }}
+          color="primary"
         >
           Register
         </Button>

@@ -3,6 +3,8 @@ import {
   SET_CODE,
   SET_LOADING,
   SET_MOBILE,
+  SET_NAME,
+  SET_ROLE,
   SLIDE_DISPLAY_FLEX,
   SLIDE_FADE_IN,
   SLIDE_FADE_OUT
@@ -10,6 +12,8 @@ import {
 import {
   CODE_ERROR,
   CODE_SUCCESS,
+  REGISTRATION_ERROR,
+  REGISTRATION_SUCCESS,
   TOKEN_ERROR,
   TOKEN_SUCCESS
 } from '../constants/api'
@@ -18,6 +22,8 @@ const initial = {
   mobile: '',
   code: '',
   name: '',
+  role: 'employee',
+  skills: [],
   token: '',
   loading: false,
   is_user_exists: false,
@@ -35,7 +41,6 @@ export default (state = initial, action) => {
         is_user_exists: action.data.is_user_exists
       }
     case CODE_ERROR:
-      console.warn(JSON.stringify(action.error.data))
       return { ...state, errors: action.error.data.description }
     case TOKEN_SUCCESS:
       return {
@@ -43,7 +48,13 @@ export default (state = initial, action) => {
         token: action.data.token
       }
     case TOKEN_ERROR:
-      console.warn(JSON.stringify(action.error.data))
+      return { ...state, errors: action.error.data.description }
+    case REGISTRATION_SUCCESS:
+      return {
+        ...state,
+        token: action.data.token
+      }
+    case REGISTRATION_ERROR:
       return { ...state, errors: action.error.data.description }
     case SLIDE_FADE_IN:
       return { ...state, slide_fade_in: action.payload.name }
@@ -55,6 +66,10 @@ export default (state = initial, action) => {
       return { ...state, mobile: action.payload.mobile }
     case SET_CODE:
       return { ...state, code: action.payload.code }
+    case SET_NAME:
+      return { ...state, name: action.payload.name }
+    case SET_ROLE:
+      return { ...state, role: action.payload.role }
     case SET_LOADING:
       return { ...state, loading: action.payload.is_loading }
     case CLEAR_ERRORS:
