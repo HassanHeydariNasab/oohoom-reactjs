@@ -19,7 +19,7 @@ import {
 } from '../constants/api'
 
 const initial = {
-  mobile: '',
+  mobile: '0098',
   code: '',
   name: '',
   role: 'employee',
