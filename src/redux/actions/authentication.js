@@ -1,7 +1,6 @@
 import {
   CLEAR_ERRORS,
   SET_CODE,
-  SET_LOADING,
   SET_MOBILE,
   SET_NAME,
   SET_ROLE
@@ -32,13 +31,6 @@ export const setRoleAction = role => ({
   type: SET_ROLE,
   payload: {
     role
-  }
-})
-
-export const setLoadingAction = is_loading => ({
-  type: SET_LOADING,
-  payload: {
-    is_loading
   }
 })
 

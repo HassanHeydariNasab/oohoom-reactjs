@@ -24,7 +24,7 @@ import {
 
 import { BASE_URL } from '../../local_configs.js'
 import { createDriver } from 'redux-saga-requests-fetch'
-import { setLoadingAction } from '../actions/authentication.js'
+import { setLoadingAction } from '../actions/notification.js'
 
 /**
  * rootSaga

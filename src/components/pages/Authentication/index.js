@@ -17,7 +17,6 @@ import React, { useEffect, useState } from 'react'
 import {
   clearErrorsAction,
   setCodeAction,
-  setLoadingAction,
   setMobileAction,
   setNameAction,
   setRoleAction
@@ -34,6 +33,8 @@ import {
 } from '../../../redux/actions/slide'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { setLoadingAction } from '../../../redux/actions/notification'
+
 function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
   return `slide ${slideFadeIn === name ? 'fade-in' : ''} ${
     slideFadeOut === name ? 'fade-out' : ''
@@ -44,15 +45,10 @@ function Authentication() {
   useEffect(() => {}, [])
   const dispatch = useDispatch()
   const authenticationState = useSelector(state => state.authentication)
+  const notificationState = useSelector(state => state.notification)
 
   return (
     <div id="center-card">
-      <LinearProgress
-        variant="indeterminate"
-        style={{ width: '100%', position: 'fixed', top: '1rem' }}
-        color="primary"
-        hidden={!authenticationState.loading}
-      />
       <div
         id="start"
         className={slide_class(
@@ -111,7 +107,7 @@ function Authentication() {
                 ? authenticationState.errors.mobile
                 : 'example:00989389742591'
             }
-            style={{ marginTop: '5rem' }}
+            style={{ marginTop: '3rem' }}
             variant="outlined"
             fullWidth
             value={authenticationState.mobile}
@@ -124,9 +120,9 @@ function Authentication() {
           />
           <Button
             variant="contained"
-            disabled={authenticationState.loading}
+            disabled={notificationState.loading}
             size="large"
-            style={{ marginTop: '5rem' }}
+            style={{ marginTop: '3rem' }}
             color="primary"
             type="submit"
           >
@@ -174,9 +170,9 @@ function Authentication() {
           />
           <Button
             variant="contained"
-            disabled={authenticationState.loading}
+            disabled={notificationState.loading}
             size="large"
-            style={{ marginTop: '5rem' }}
+            style={{ marginTop: '3rem' }}
             color="primary"
             type="submit"
           >
@@ -231,7 +227,7 @@ function Authentication() {
           />
           <TextField
             label="name"
-            style={{ marginTop: '5rem' }}
+            style={{ marginTop: '3rem' }}
             helperText={
               authenticationState.errors?.name
                 ? authenticationState.errors.name[0]
@@ -251,7 +247,7 @@ function Authentication() {
             component="fieldset"
             style={{
               alignSelf: 'flex-start',
-              marginTop: '5rem',
+              marginTop: '3rem',
               marginLeft: '1rem'
             }}
           >
@@ -279,9 +275,9 @@ function Authentication() {
 
           <Button
             variant="contained"
-            disabled={authenticationState.loading}
+            disabled={notificationState.loading}
             size="large"
-            style={{ marginTop: '5rem' }}
+            style={{ marginTop: '3rem' }}
             color="primary"
             type="submit"
           >

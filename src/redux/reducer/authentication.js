@@ -1,7 +1,6 @@
 import {
   CLEAR_ERRORS,
   SET_CODE,
-  SET_LOADING,
   SET_MOBILE,
   SET_NAME,
   SET_ROLE,
@@ -25,7 +24,6 @@ const initial = {
   role: 'employee',
   skills: [],
   token: '',
-  loading: false,
   is_user_exists: false,
   slide_fade_in: 'start',
   slide_fade_out: 'nothing',
@@ -70,8 +68,6 @@ export default (state = initial, action) => {
       return { ...state, name: action.payload.name }
     case SET_ROLE:
       return { ...state, role: action.payload.role }
-    case SET_LOADING:
-      return { ...state, loading: action.payload.is_loading }
     case CLEAR_ERRORS:
       return { ...state, errors: null }
     default:
