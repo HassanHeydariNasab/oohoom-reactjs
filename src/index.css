@@ -40,7 +40,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: vazir;
-  background-color: #fff !important;
+  background-color: #fafafa;
   color: #052c49;
   min-height: 100vh;
 }

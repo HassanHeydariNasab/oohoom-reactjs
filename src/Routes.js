@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import Authentication from './components/pages/Authentication'
+import CreateProject from './components/pages/CreateProject'
 import Home from './components/pages/Home'
 import { setRouteAction } from './redux/actions/router'
 import store from './redux/store'
@@ -12,6 +13,7 @@ const routes = {
     component: <Authentication />,
   },
   home: { url: '/', component: <Home /> },
+  create_project: { url: '/create_project', component: <CreateProject /> },
 }
 
 var url_to_name = {}

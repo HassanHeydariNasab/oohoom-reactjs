@@ -2,34 +2,29 @@ import './index.css'
 
 import {
   Button,
-  Card,
   FormControl,
   FormControlLabel,
   FormLabel,
-  LinearProgress,
   Radio,
   RadioGroup,
   TextField,
   Typography,
-  makeStyles
 } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { CODE_ERROR, REGISTRATION_ERROR, TOKEN_ERROR } from '../../../redux/constants/api'
+import React, { useEffect } from 'react'
 import {
   clearErrorsAction,
-  setCodeAction,
-  setMobileAction,
-  setNameAction,
-  setRoleAction
-} from '../../../redux/actions/authentication'
+  setFieldAction,
+} from '../../../redux/actions/general'
 import {
   codeAction,
   registrationAction,
-  tokenAction
+  tokenAction,
 } from '../../../redux/actions/api'
 import {
   slideDisplayFlexAction,
   slideFadeInAction,
-  slideFadeOutAction
+  slideFadeOutAction,
 } from '../../../redux/actions/slide'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -44,8 +39,9 @@ function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
 function Authentication() {
   useEffect(() => {}, [])
   const dispatch = useDispatch()
-  const authenticationState = useSelector(state => state.authentication)
-  const notificationState = useSelector(state => state.notification)
+  const authenticationState = useSelector((state) => state.authentication)
+  const notificationState = useSelector((state) => state.notification)
+  const generalState = useSelector((state) => state.general)
 
   return (
     <div id="center-card">
@@ -64,7 +60,7 @@ function Authentication() {
         </Typography>
         <Button
           variant="outlined"
-          onClick={e => {
+          onClick={() => {
             dispatch(slideFadeOutAction('start'))
             dispatch(slideFadeInAction('nothing'))
             setTimeout(() => {
@@ -95,27 +91,27 @@ function Authentication() {
         <form
           autoComplete="off"
           action="javascript:;"
-          onSubmit={e => {
-            dispatch(codeAction(authenticationState.mobile))
+          onSubmit={() => {
+            dispatch(codeAction(generalState.auth__mobile))
             dispatch(setLoadingAction(true))
           }}
         >
           <TextField
             label="mobile"
             helperText={
-              authenticationState.errors?.mobile
-                ? authenticationState.errors.mobile
+              generalState[CODE_ERROR]?.mobile
+                ? generalState[CODE_ERROR].mobile
                 : 'example:00989389742591'
             }
             style={{ marginTop: '3rem' }}
             variant="outlined"
             fullWidth
-            value={authenticationState.mobile}
-            onChange={e => {
-              dispatch(setMobileAction(e.target.value))
-              dispatch(clearErrorsAction())
+            value={generalState.auth__mobile}
+            onChange={(e) => {
+              dispatch(setFieldAction('auth', 'mobile', e.target.value))
+              dispatch(clearErrorsAction(CODE_ERROR))
             }}
-            error={Boolean(authenticationState.errors?.mobile)}
+            error={Boolean(generalState[CODE_ERROR]?.mobile)}
             type="tel"
           />
           <Button
@@ -143,9 +139,9 @@ function Authentication() {
         <form
           autoComplete="off"
           action="javascript:;"
-          onSubmit={e => {
+          onSubmit={() => {
             dispatch(
-              tokenAction(authenticationState.mobile, authenticationState.code)
+              tokenAction(generalState.auth__mobile, generalState.auth__code)
             )
             dispatch(setLoadingAction(true))
           }}
@@ -154,18 +150,18 @@ function Authentication() {
             label="code"
             style={{ marginTop: '5rem' }}
             helperText={
-              authenticationState.errors?.code
-                ? authenticationState.errors.code
+              generalState[TOKEN_ERROR]?.code
+                ? generalState[TOKEN_ERROR].code
                 : 'code you recieved'
             }
             variant="outlined"
             fullWidth
-            value={authenticationState.code}
-            onChange={e => {
-              dispatch(setCodeAction(e.target.value))
-              dispatch(clearErrorsAction())
+            value={generalState.auth__code}
+            onChange={(e) => {
+              dispatch(setFieldAction('auth', 'code', e.target.value))
+              dispatch(clearErrorsAction(TOKEN_ERROR))
             }}
-            error={Boolean(authenticationState.errors?.code)}
+            error={Boolean(generalState[TOKEN_ERROR]?.code)}
             type="number"
           />
           <Button
@@ -193,14 +189,14 @@ function Authentication() {
         <form
           autoComplete="off"
           action="javascript:;"
-          onSubmit={e => {
+          onSubmit={() => {
             dispatch(
               registrationAction(
-                authenticationState.mobile,
-                authenticationState.code,
-                authenticationState.name,
-                authenticationState.role,
-                // authenticationState.skills
+                generalState.auth__mobile,
+                generalState.auth__code,
+                generalState.auth__name,
+                generalState.auth__role,
+                // generalState.auth__skills
                 []
               )
             )
@@ -211,36 +207,36 @@ function Authentication() {
             label="code"
             style={{ marginTop: '5rem' }}
             helperText={
-              authenticationState.errors?.code
-                ? authenticationState.errors.code
+              generalState[REGISTRATION_ERROR]?.code
+                ? generalState[REGISTRATION_ERROR].code
                 : 'code you recieved'
             }
             variant="outlined"
             fullWidth
-            value={authenticationState.code}
-            onChange={e => {
-              dispatch(setCodeAction(e.target.value))
-              dispatch(clearErrorsAction())
+            value={generalState.auth__code}
+            onChange={(e) => {
+              dispatch(setFieldAction('auth', 'code', e.target.value))
+              dispatch(clearErrorsAction(REGISTRATION_ERROR))
             }}
-            error={Boolean(authenticationState.errors?.code)}
+            error={Boolean(generalState[REGISTRATION_ERROR]?.code)}
             type="number"
           />
           <TextField
             label="name"
             style={{ marginTop: '3rem' }}
             helperText={
-              authenticationState.errors?.name
-                ? authenticationState.errors.name[0]
+              generalState[REGISTRATION_ERROR]?.name
+                ? generalState[REGISTRATION_ERROR].name[0]
                 : 'valid: lowercase letters, numbers and _'
             }
             variant="outlined"
             fullWidth
-            value={authenticationState.name}
-            onChange={e => {
-              dispatch(setNameAction(e.target.value))
-              dispatch(clearErrorsAction())
+            value={generalState.auth__name}
+            onChange={(e) => {
+              dispatch(setFieldAction('auth', 'name', e.target.value))
+              dispatch(clearErrorsAction(REGISTRATION_ERROR))
             }}
-            error={Boolean(authenticationState.errors?.name)}
+            error={Boolean(generalState[REGISTRATION_ERROR]?.name)}
           />
 
           <FormControl
@@ -248,16 +244,16 @@ function Authentication() {
             style={{
               alignSelf: 'flex-start',
               marginTop: '3rem',
-              marginLeft: '1rem'
+              marginLeft: '1rem',
             }}
           >
             <FormLabel component="legend">I'm an</FormLabel>
             <RadioGroup
               aria-label="role"
               name="role"
-              value={authenticationState.role}
-              onChange={e => {
-                dispatch(setRoleAction(e.target.value))
+              value={generalState.auth__role}
+              onChange={(e) => {
+                dispatch(setFieldAction('auth', 'role', e.target.value))
               }}
             >
               <FormControlLabel

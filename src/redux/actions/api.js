@@ -1,14 +1,14 @@
-import { CODE, REGISTRATION, TOKEN } from '../constants/api'
-export const codeAction = mobile => ({
+import { CODE, CREATE_PROJECT, FETCH_PROJECTS, REGISTRATION, TOKEN } from '../constants/api'
+export const codeAction = (mobile) => ({
   type: CODE,
   request: {
     url: '/v1/code',
     method: 'POST',
     body: JSON.stringify({ mobile }),
     headers: {
-      'Content-Type': 'application/json'
-    }
-  }
+      'Content-Type': 'application/json',
+    },
+  },
 })
 
 export const tokenAction = (mobile, code) => ({
@@ -18,9 +18,9 @@ export const tokenAction = (mobile, code) => ({
     method: 'POST',
     body: JSON.stringify({ mobile, code }),
     headers: {
-      'Content-Type': 'application/json'
-    }
-  }
+      'Content-Type': 'application/json',
+    },
+  },
 })
 
 export const registrationAction = (mobile, code, name, role, skills) => ({
@@ -30,7 +30,28 @@ export const registrationAction = (mobile, code, name, role, skills) => ({
     method: 'POST',
     body: JSON.stringify({ mobile, code, name, role, skills }),
     headers: {
-      'Content-Type': 'application/json'
-    }
-  }
+      'Content-Type': 'application/json',
+    },
+  },
+})
+
+export const fetchProjectsAction = (state, skip = 0, limit = 10) => ({
+  type: FETCH_PROJECTS,
+  request: {
+    url: `/v1/projects?state=${state}&skip=${skip}&limit=${limit}`,
+    method: 'GET',
+  },
+})
+
+export const createProjectAction = (title, description, skills) => ({
+  type: CREATE_PROJECT,
+  request: {
+    url: '/v1/projects',
+    method: 'POST',
+    body: JSON.stringify({ title, description, skills }),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token'),
+    },
+  },
 })

@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { AccountCircle } from '@material-ui/icons'
+import { Home } from '@material-ui/icons'
 import React from 'react'
 
 const theme = createMuiTheme({})
@@ -26,21 +28,23 @@ export default function MUI() {
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="fixed" classes={{ root: classes.root }}>
-        <Toolbar>
+        <Toolbar variant="dense">
           <Button
             color="inherit"
             onClick={() => {
               navigate('home')
             }}
+            startIcon={<Home />}
           >
             Home
           </Button>
-          <Button color="inherit">Contact Us</Button>
           <Button
             color="inherit"
             onClick={() => {
               navigate('auth')
             }}
+            variant="outlined"
+            startIcon={<AccountCircle />}
           >
             Login
           </Button>

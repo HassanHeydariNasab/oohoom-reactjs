@@ -1,0 +1,22 @@
+div.projects-parent-container {
+  width: 100%;
+  max-width: 50rem;
+  min-height: 80vh;
+}
+
+div.projects-container {
+  width: 100%;
+}
+
+div.tags-container {
+  display: flex;
+  padding: 1rem;
+}
+
+div.tag {
+  margin: 0px 0.2rem !important;
+}
+
+.project-card {
+  margin-bottom: 1.6rem;
+}
