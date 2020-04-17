@@ -1,6 +1,7 @@
 import './Layout.css'
 
 import { AppBar, Button, LinearProgress, Toolbar } from '@material-ui/core'
+import React, { useEffect } from 'react'
 import Routes, { navigate } from './Routes'
 import {
   ThemeProvider,
@@ -11,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AccountCircle } from '@material-ui/icons'
 import { Home } from '@material-ui/icons'
-import React from 'react'
+import { fetchUserAction } from './redux/actions/api'
 
 const theme = createMuiTheme({})
 
@@ -25,6 +26,13 @@ export default function MUI() {
   const notificationState = useSelector((state) => state.notification)
   const authenticationState = useSelector((state) => state.authentication)
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (window.localStorage.getItem('token')) {
+      dispatch(fetchUserAction('me'))
+    }
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>

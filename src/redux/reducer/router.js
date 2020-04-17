@@ -1,7 +1,7 @@
 import { SET_ROUTE } from '../constants/router'
 
 const initial = {
-  route: { name: 'home' },
+  route: { name: 'empty' },
 }
 
 export default (state = initial, action) => {

@@ -8,6 +8,7 @@ import store from './redux/store'
 import { useSelector } from 'react-redux'
 
 const routes = {
+  empty: { url: '/empty', component: <React.Fragment /> },
   auth: {
     url: '/auth',
     component: <Authentication />,
