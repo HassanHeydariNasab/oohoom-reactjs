@@ -48,9 +48,9 @@ export const fetchUserAction = (name) => ({
   request: {
     url: `/v1/users/${name}`,
     method: 'GET',
-  },
-  headers: {
-    Authorization: localStorage.getItem('token'),
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+    },
   },
 })
 
@@ -70,7 +70,7 @@ export const createProjectAction = (title, description, skills) => ({
     body: JSON.stringify({ title, description, skills }),
     headers: {
       'Content-Type': 'application/json',
-      Authorization: localStorage.getItem('token'),
+      Authorization: window.localStorage.getItem('token'),
     },
   },
 })

@@ -11,7 +11,6 @@ import {
 } from '../constants/authentication'
 
 const initial = {
-  is_user_exists: false,
   slide_fade_in: 'start',
   slide_fade_out: 'nothing',
   slide_display_flex: 'start',
@@ -20,17 +19,6 @@ const initial = {
 
 export default (state = initial, action) => {
   switch (action.type) {
-    case CODE_SUCCESS:
-      return {
-        ...state,
-        is_user_exists: action.data.is_user_exists,
-      }
-    case TOKEN_SUCCESS:
-      localStorage.setItem('token', action.data.token)
-      return state
-    case REGISTRATION_SUCCESS:
-      localStorage.setItem('token', action.data.token)
-      return state
     case FETCH_USER_SUCCESS:
       return { ...state, user: action.data }
     case SLIDE_FADE_IN:

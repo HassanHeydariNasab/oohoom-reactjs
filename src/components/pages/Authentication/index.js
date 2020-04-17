@@ -32,6 +32,7 @@ import {
 } from '../../../redux/actions/slide'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { KeyboardArrowLeft } from '@material-ui/icons'
 import { setLoadingAction } from '../../../redux/actions/notification'
 
 function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
@@ -74,7 +75,7 @@ function Authentication() {
           size="large"
           style={{ marginTop: '5rem' }}
         >
-          login
+          login / register
         </Button>
       </div>
       <div
@@ -165,16 +166,35 @@ function Authentication() {
             error={Boolean(generalState[TOKEN_ERROR]?.code)}
             type="number"
           />
-          <Button
-            variant="contained"
-            disabled={notificationState.loading}
-            size="large"
-            style={{ marginTop: '3rem' }}
-            color="primary"
-            type="submit"
-          >
-            Login
-          </Button>
+          <div style={{ width: '100%', marginTop: '3rem', display: 'flex' }}>
+            <Button
+              onClick={() => {
+                dispatch(slideFadeOutAction('login'))
+                dispatch(slideFadeInAction('nothing'))
+                setTimeout(() => {
+                  dispatch(slideDisplayFlexAction('code'))
+                }, 1000)
+                setTimeout(() => {
+                  dispatch(slideFadeInAction('code'))
+                }, 1300)
+              }}
+              size="large"
+              color={'primary'}
+              startIcon={<KeyboardArrowLeft />}
+            >
+              correct mobile
+            </Button>
+            <div style={{ flex: 1 }} />
+            <Button
+              variant="contained"
+              disabled={notificationState.loading}
+              size="large"
+              color="primary"
+              type="submit"
+            >
+              Login
+            </Button>
+          </div>
         </form>
       </div>
       <div
@@ -269,17 +289,35 @@ function Authentication() {
               />
             </RadioGroup>
           </FormControl>
-
-          <Button
-            variant="contained"
-            disabled={notificationState.loading}
-            size="large"
-            style={{ marginTop: '3rem' }}
-            color="primary"
-            type="submit"
-          >
-            Register
-          </Button>
+          <div style={{ width: '100%', marginTop: '3rem', display: 'flex' }}>
+            <Button
+              onClick={() => {
+                dispatch(slideFadeOutAction('register'))
+                dispatch(slideFadeInAction('nothing'))
+                setTimeout(() => {
+                  dispatch(slideDisplayFlexAction('code'))
+                }, 1000)
+                setTimeout(() => {
+                  dispatch(slideFadeInAction('code'))
+                }, 1300)
+              }}
+              size="large"
+              color={'primary'}
+              startIcon={<KeyboardArrowLeft />}
+            >
+              correct mobile
+            </Button>
+            <div style={{ flex: 1 }} />
+            <Button
+              variant="contained"
+              disabled={notificationState.loading}
+              size="large"
+              color="primary"
+              type="submit"
+            >
+              Register
+            </Button>
+          </div>
         </form>
       </div>
     </div>

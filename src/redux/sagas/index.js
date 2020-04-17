@@ -25,18 +25,16 @@ import {
 import { BASE_URL } from '../../local_configs.js'
 import { createDriver } from 'redux-saga-requests-fetch'
 import { navigate } from '../../Routes'
-import { setLoadingAction } from '../actions/notification.js'
 
 /**
  * rootSaga
  */
 export default function* root() {
-  yield takeEvery(CODE_SUCCESS, function*() {
-    const authenticationState = yield select(state => state.authentication)
+  yield takeEvery(CODE_SUCCESS, function*(action) {
     yield put(slideFadeOutAction('code'))
     yield put(slideFadeInAction('nothing'))
     yield delay(1000)
-    if (authenticationState.is_user_exists) {
+    if (action.data.is_user_exists) {
       yield put(slideDisplayFlexAction('login'))
       yield delay(300)
       yield put(slideFadeInAction('login'))
@@ -45,26 +43,13 @@ export default function* root() {
       yield delay(300)
       yield put(slideFadeInAction('register'))
     }
-    yield put(setLoadingAction(false))
   })
-  yield takeEvery(CODE_ERROR, function*() {
-    yield delay(1000)
-    yield put(setLoadingAction(false))
-  })
-  yield takeEvery(TOKEN_ERROR, function*() {
-    yield delay(1000)
-    yield put(setLoadingAction(false))
-  })
-  yield takeEvery(TOKEN_SUCCESS, function*() {
-    yield put(setLoadingAction(false))
+  yield takeEvery(TOKEN_SUCCESS, function*(action) {
+    window.localStorage.setItem('token', action.data.token)
     yield navigate('home')
   })
-  yield takeEvery(REGISTRATION_ERROR, function*() {
-    yield delay(1000)
-    yield put(setLoadingAction(false))
-  })
-  yield takeEvery(REGISTRATION_SUCCESS, function*() {
-    yield put(setLoadingAction(false))
+  yield takeEvery(REGISTRATION_SUCCESS, function*(action) {
+    window.localStorage.setItem('token', action.data.token)
     yield navigate('home')
   })
   yield createRequestInstance({

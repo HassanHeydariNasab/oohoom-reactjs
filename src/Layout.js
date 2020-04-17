@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MUI() {
   const notificationState = useSelector((state) => state.notification)
+  const authenticationState = useSelector((state) => state.authentication)
   const classes = useStyles()
 
   return (
@@ -38,16 +39,28 @@ export default function MUI() {
           >
             Home
           </Button>
-          <Button
-            color="inherit"
-            onClick={() => {
-              navigate('auth')
-            }}
-            variant="outlined"
-            startIcon={<AccountCircle />}
-          >
-            Login
-          </Button>
+          {'name' in authenticationState.user ? (
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate('users_me')
+              }}
+              startIcon={<AccountCircle />}
+            >
+              {authenticationState.user.name}
+            </Button>
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate('auth')
+              }}
+              variant="outlined"
+              startIcon={<AccountCircle />}
+            >
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <div

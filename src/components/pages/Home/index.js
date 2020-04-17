@@ -34,10 +34,10 @@ const Home = () => {
     <div className="projects-parent-container">
       {authenticationState.user?.role !== 'employee' ? (
         <Button
-          style={{ marginBottom: '1rem' }}
+          style={{ margin: '1rem 0px' }}
           endIcon={<Add />}
           onClick={() => {
-            if (localStorage.getItem('token')) {
+            if (window.localStorage.getItem('token')) {
               navigate('create_project')
             } else {
               navigate('auth')

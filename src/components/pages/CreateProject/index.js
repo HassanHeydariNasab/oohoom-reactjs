@@ -32,7 +32,7 @@ const CreateProject = () => {
   return (
     <div className="project-parent-container">
       <Button
-        style={{ marginBottom: '1rem' }}
+        style={{ margin: '1rem 0px' }}
         startIcon={<KeyboardArrowLeft />}
         onClick={() => {
           navigate('home')
