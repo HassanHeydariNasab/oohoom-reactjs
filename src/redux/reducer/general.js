@@ -6,6 +6,7 @@ const initial = {}
 export default (state = initial, action) => {
   if (action.type.endsWith('_ERROR')) {
     if (action.error.status === 401) {
+      window.localStorage.removeItem('token')
       window.location = '/auth'
     } else {
       return { ...state, [`${action.type}`]: action.error.data.description }

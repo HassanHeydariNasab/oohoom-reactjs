@@ -9,32 +9,47 @@ import {
   Divider,
 } from '@material-ui/core'
 import React, { useEffect } from 'react'
+import {
+  fetchProjectsAction,
+  fetchUserAction,
+} from '../../../redux/actions/api'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Add } from '@material-ui/icons'
-import { fetchProjectsAction } from '../../../redux/actions/api'
 import { navigate } from '../../../Routes'
 
 const Home = () => {
   useEffect(() => {
     dispatch(fetchProjectsAction('all'))
+
+    if (window.localStorage.getItem('token')) {
+      dispatch(fetchUserAction('me'))
+    }
+    
   }, [])
   const dispatch = useDispatch()
   const projectsState = useSelector((state) => state.projects)
+  const authenticationState = useSelector((state) => state.authentication)
   return (
     <div className="projects-parent-container">
-      <Button
-        style={{ marginBottom: '1rem' }}
-        endIcon={<Add />}
-        onClick={() => {
-          navigate('create_project')
-        }}
-      >
-        Create project
-      </Button>
+      {authenticationState.user?.role !== 'employee' ? (
+        <Button
+          style={{ marginBottom: '1rem' }}
+          endIcon={<Add />}
+          onClick={() => {
+            if (localStorage.getItem('token')) {
+              navigate('create_project')
+            } else {
+              navigate('auth')
+            }
+          }}
+        >
+          Create project
+        </Button>
+      ) : null}
       <div className="projects-container">
         {projectsState.projects.map((project) => (
-          <Card key={project._id.$oid} className='project-card'>
+          <Card key={project._id.$oid} className="project-card">
             <CardHeader title={project.title} />
             <CardContent>{project.description}</CardContent>
             <div className="tags-container">

@@ -1,5 +1,6 @@
 import {
   CODE_SUCCESS,
+  FETCH_USER_SUCCESS,
   REGISTRATION_SUCCESS,
   TOKEN_SUCCESS,
 } from '../constants/api'
@@ -14,6 +15,7 @@ const initial = {
   slide_fade_in: 'start',
   slide_fade_out: 'nothing',
   slide_display_flex: 'start',
+  user: {}
 }
 
 export default (state = initial, action) => {
@@ -29,6 +31,8 @@ export default (state = initial, action) => {
     case REGISTRATION_SUCCESS:
       localStorage.setItem('token', action.data.token)
       return state
+    case FETCH_USER_SUCCESS:
+      return { ...state, user: action.data }
     case SLIDE_FADE_IN:
       return { ...state, slide_fade_in: action.payload.name }
     case SLIDE_FADE_OUT:

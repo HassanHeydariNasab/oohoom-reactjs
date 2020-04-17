@@ -24,6 +24,7 @@ import {
 
 import { BASE_URL } from '../../local_configs.js'
 import { createDriver } from 'redux-saga-requests-fetch'
+import { navigate } from '../../Routes'
 import { setLoadingAction } from '../actions/notification.js'
 
 /**
@@ -50,31 +51,21 @@ export default function* root() {
     yield delay(1000)
     yield put(setLoadingAction(false))
   })
-  yield takeEvery(TOKEN_SUCCESS, function*() {
-    yield put(slideFadeOutAction('login'))
-    yield put(slideFadeInAction('nothing'))
-    yield delay(1000)
-    yield put(slideDisplayFlexAction('start'))
-    yield delay(300)
-    yield put(slideFadeInAction('start'))
-    yield put(setLoadingAction(false))
-  })
   yield takeEvery(TOKEN_ERROR, function*() {
     yield delay(1000)
     yield put(setLoadingAction(false))
   })
-  yield takeEvery(REGISTRATION_SUCCESS, function*() {
-    yield put(slideFadeOutAction('register'))
-    yield put(slideFadeInAction('nothing'))
-    yield delay(1000)
-    yield put(slideDisplayFlexAction('start'))
-    yield delay(300)
-    yield put(slideFadeInAction('start'))
+  yield takeEvery(TOKEN_SUCCESS, function*() {
     yield put(setLoadingAction(false))
+    yield navigate('home')
   })
   yield takeEvery(REGISTRATION_ERROR, function*() {
     yield delay(1000)
     yield put(setLoadingAction(false))
+  })
+  yield takeEvery(REGISTRATION_SUCCESS, function*() {
+    yield put(setLoadingAction(false))
+    yield navigate('home')
   })
   yield createRequestInstance({
     driver: createDriver(fetch, {

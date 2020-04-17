@@ -1,4 +1,12 @@
-import { CODE, CREATE_PROJECT, FETCH_PROJECTS, REGISTRATION, TOKEN } from '../constants/api'
+import {
+  CODE,
+  CREATE_PROJECT,
+  FETCH_PROJECTS,
+  FETCH_USER,
+  REGISTRATION,
+  TOKEN,
+} from '../constants/api'
+
 export const codeAction = (mobile) => ({
   type: CODE,
   request: {
@@ -32,6 +40,17 @@ export const registrationAction = (mobile, code, name, role, skills) => ({
     headers: {
       'Content-Type': 'application/json',
     },
+  },
+})
+
+export const fetchUserAction = (name) => ({
+  type: FETCH_USER,
+  request: {
+    url: `/v1/users/${name}`,
+    method: 'GET',
+  },
+  headers: {
+    Authorization: localStorage.getItem('token'),
   },
 })
 

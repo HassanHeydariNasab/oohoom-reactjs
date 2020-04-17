@@ -10,7 +10,11 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
-import { CODE_ERROR, REGISTRATION_ERROR, TOKEN_ERROR } from '../../../redux/constants/api'
+import {
+  CODE_ERROR,
+  REGISTRATION_ERROR,
+  TOKEN_ERROR,
+} from '../../../redux/constants/api'
 import React, { useEffect } from 'react'
 import {
   clearErrorsAction,
@@ -54,10 +58,7 @@ function Authentication() {
           authenticationState.slide_display_flex
         )}
       >
-        <Typography variant="h1">oohoom</Typography>
-        <Typography variant="h4" align="center">
-          is a great group of translators
-        </Typography>
+        <Typography variant="h2">Who are you?</Typography>
         <Button
           variant="outlined"
           onClick={() => {
@@ -73,7 +74,7 @@ function Authentication() {
           size="large"
           style={{ marginTop: '5rem' }}
         >
-          Start
+          login
         </Button>
       </div>
       <div
