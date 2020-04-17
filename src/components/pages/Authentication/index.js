@@ -33,6 +33,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { KeyboardArrowLeft } from '@material-ui/icons'
+import { logoutAction } from '../../../redux/actions/authentication'
 import { setLoadingAction } from '../../../redux/actions/notification'
 
 function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
@@ -63,6 +64,7 @@ function Authentication() {
         <Button
           variant="outlined"
           onClick={() => {
+            dispatch(logoutAction(false))
             dispatch(slideFadeOutAction('start'))
             dispatch(slideFadeInAction('nothing'))
             setTimeout(() => {

@@ -1,28 +1,18 @@
 import {
-  CODE_ERROR,
   CODE_SUCCESS,
-  REGISTRATION_ERROR,
   REGISTRATION_SUCCESS,
-  TOKEN_ERROR,
-  TOKEN_SUCCESS
+  TOKEN_SUCCESS,
 } from '../constants/api'
-import {
-  all,
-  call,
-  delay,
-  fork,
-  put,
-  select,
-  takeEvery
-} from 'redux-saga/effects'
 import { createRequestInstance, watchRequests } from 'redux-saga-requests'
+import { delay, put, takeEvery } from 'redux-saga/effects'
 import {
   slideDisplayFlexAction,
   slideFadeInAction,
-  slideFadeOutAction
+  slideFadeOutAction,
 } from '../actions/slide.js'
 
 import { BASE_URL } from '../../local_configs.js'
+import { LOGOUT } from '../constants/authentication'
 import { createDriver } from 'redux-saga-requests-fetch'
 import { navigate } from '../../Routes'
 
@@ -30,7 +20,7 @@ import { navigate } from '../../Routes'
  * rootSaga
  */
 export default function* root() {
-  yield takeEvery(CODE_SUCCESS, function*(action) {
+  yield takeEvery(CODE_SUCCESS, function* (action) {
     yield put(slideFadeOutAction('code'))
     yield put(slideFadeInAction('nothing'))
     yield delay(1000)
@@ -44,18 +34,25 @@ export default function* root() {
       yield put(slideFadeInAction('register'))
     }
   })
-  yield takeEvery(TOKEN_SUCCESS, function*(action) {
+  yield takeEvery(TOKEN_SUCCESS, function* (action) {
     window.localStorage.setItem('token', action.data.token)
     yield navigate('home')
   })
-  yield takeEvery(REGISTRATION_SUCCESS, function*(action) {
+  yield takeEvery(REGISTRATION_SUCCESS, function* (action) {
     window.localStorage.setItem('token', action.data.token)
     yield navigate('home')
   })
+  yield takeEvery(LOGOUT, function* (action) {
+    window.localStorage.clear()
+    if (action.payload.should_goto_home) {
+      yield navigate('home')
+    }
+  })
+
   yield createRequestInstance({
     driver: createDriver(fetch, {
-      baseURL: BASE_URL
-    })
+      baseURL: BASE_URL,
+    }),
   })
   yield watchRequests() // listen to action.request
 }

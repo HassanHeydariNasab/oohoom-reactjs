@@ -47,7 +47,7 @@ export default function MUI() {
           >
             Home
           </Button>
-          {'name' in authenticationState.user ? (
+          {authenticationState.user ? (
             <Button
               color="inherit"
               onClick={() => {
