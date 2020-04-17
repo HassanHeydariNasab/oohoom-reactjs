@@ -2,6 +2,7 @@ div.projects-parent-container {
   width: 100%;
   max-width: 50rem;
   min-height: 80vh;
+  padding: 2rem 0px;
 }
 
 div.projects-container {

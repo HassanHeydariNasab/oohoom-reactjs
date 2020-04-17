@@ -34,7 +34,7 @@ const Home = () => {
     <div className="projects-parent-container">
       {authenticationState.user?.role !== 'employee' ? (
         <Button
-          style={{ margin: '1rem 0px' }}
+          style={{ marginBottom: '1rem' }}
           endIcon={<Add />}
           onClick={() => {
             if (window.localStorage.getItem('token')) {
