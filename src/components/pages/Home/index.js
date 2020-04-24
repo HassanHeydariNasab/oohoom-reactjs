@@ -9,6 +9,7 @@ import {
   Divider,
 } from '@material-ui/core'
 import React, { useEffect } from 'react'
+import { clearErrorsAction, clearFormAction } from '../../../redux/actions/general'
 import {
   fetchProjectsAction,
   fetchUserAction,
@@ -16,6 +17,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Add } from '@material-ui/icons'
+import { PROJECT_FORM_ERROR } from '../../../redux/constants/api'
 import { navigate } from '../../../Routes'
 
 const Home = () => {
@@ -25,7 +27,6 @@ const Home = () => {
     if (window.localStorage.getItem('token')) {
       dispatch(fetchUserAction('me'))
     }
-    
   }, [])
   const dispatch = useDispatch()
   const projectsState = useSelector((state) => state.projects)
@@ -38,6 +39,8 @@ const Home = () => {
           endIcon={<Add />}
           onClick={() => {
             if (window.localStorage.getItem('token')) {
+              dispatch(clearFormAction('project_form'))
+              dispatch(clearErrorsAction(PROJECT_FORM_ERROR))
               navigate('project_form')
             } else {
               navigate('auth')

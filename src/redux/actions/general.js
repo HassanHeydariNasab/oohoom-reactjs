@@ -1,6 +1,7 @@
 import {
   ADD_ITEM_TO_ARRAY,
   CLEAR_ERRORS,
+  CLEAR_FORM,
   REMOVE_ITEM_FROM_ARRAY,
   SET_FIELD,
 } from '../constants/general'
@@ -36,5 +37,12 @@ export const clearErrorsAction = (API_ERROR) => ({
   type: CLEAR_ERRORS,
   payload: {
     api: API_ERROR,
+  },
+})
+
+export const clearFormAction = (form) => ({
+  type: CLEAR_FORM,
+  payload: {
+    form,
   },
 })

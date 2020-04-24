@@ -1,4 +1,9 @@
-import { ADD_ITEM_TO_ARRAY, CLEAR_ERRORS, REMOVE_ITEM_FROM_ARRAY } from '../constants/general'
+import {
+  ADD_ITEM_TO_ARRAY,
+  CLEAR_ERRORS,
+  CLEAR_FORM,
+  REMOVE_ITEM_FROM_ARRAY,
+} from '../constants/general'
 
 import { SET_FIELD } from '../constants/general'
 
@@ -12,6 +17,14 @@ export default (state = initial, action) => {
     } else {
       return { ...state, [`${action.type}`]: action.error.data.description }
     }
+  } else if (action.type === CLEAR_FORM) {
+    let new_state = { ...state }
+    for (let field in state) {
+      if (field.startsWith(`${action.payload.form}__`)) {
+        delete new_state[field]
+      }
+    }
+    return new_state
   }
   let key
   let value
