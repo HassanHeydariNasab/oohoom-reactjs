@@ -1,10 +1,11 @@
 import {
   CODE,
+  CREATE_PROJECT,
   FETCH_PROJECTS,
   FETCH_USER,
-  PROJECT_FORM,
   REGISTRATION,
   TOKEN,
+  UPDATE_PROJECT,
 } from '../constants/api'
 
 export const codeAction = (mobile) => ({
@@ -63,11 +64,28 @@ export const fetchProjectsAction = (state, skip = 0, limit = 10) => ({
 })
 
 export const createProjectAction = (title, description, skills) => ({
-  type: PROJECT_FORM,
+  type: CREATE_PROJECT,
   request: {
     url: '/v1/projects',
     method: 'POST',
     body: JSON.stringify({ title, description, skills }),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
+})
+
+export const updateProjectAction = (_id, description, skills) => ({
+  type: UPDATE_PROJECT,
+  request: {
+    url: '/v1/projects',
+    method: 'PATCH',
+    body: JSON.stringify({
+      action: 'update',
+      _id,
+      update: { description, skills },
+    }),
     headers: {
       'Content-Type': 'application/json',
       Authorization: window.localStorage.getItem('token'),

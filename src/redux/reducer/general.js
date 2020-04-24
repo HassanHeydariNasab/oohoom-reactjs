@@ -5,6 +5,7 @@ import {
   REMOVE_ITEM_FROM_ARRAY,
 } from '../constants/general'
 
+import { CREATE_PROJECT_SUCCESS } from '../constants/api'
 import { SET_FIELD } from '../constants/general'
 
 const initial = {}
@@ -64,6 +65,11 @@ export default (state = initial, action) => {
       return {
         ...state,
         [`${action.payload.api}`]: null,
+      }
+    case CREATE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        project_form___id: action.data._id,
       }
     default:
       return state

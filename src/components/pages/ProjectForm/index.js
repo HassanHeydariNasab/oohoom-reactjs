@@ -25,10 +25,13 @@ import {
   removeItemFromArrayAction,
   setFieldAction,
 } from '../../../redux/actions/general'
+import {
+  createProjectAction,
+  updateProjectAction,
+} from '../../../redux/actions/api'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { PROJECT_FORM_ERROR } from '../../../redux/constants/api'
-import { createProjectAction } from '../../../redux/actions/api'
+import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import { navigate } from '../../../Routes'
 import { setLoadingAction } from '../../../redux/actions/notification'
 
@@ -54,13 +57,23 @@ const CreateProject = () => {
           autoComplete="off"
           action="javascript:;"
           onSubmit={(e) => {
-            dispatch(
-              createProjectAction(
-                generalState.project_form__title,
-                generalState.project_form__description,
-                generalState.project_form__skills || []
+            if (generalState.project_form___id) {
+              dispatch(
+                updateProjectAction(
+                  generalState.project_form___id,
+                  generalState.project_form__description,
+                  generalState.project_form__skills || []
+                )
               )
-            )
+            } else {
+              dispatch(
+                createProjectAction(
+                  generalState.project_form__title,
+                  generalState.project_form__description,
+                  generalState.project_form__skills || []
+                )
+              )
+            }
             dispatch(setLoadingAction(true))
           }}
         >
@@ -68,8 +81,8 @@ const CreateProject = () => {
             <TextField
               label="title"
               helperText={
-                generalState.PROJECT_FORM_ERROR?.title
-                  ? generalState.PROJECT_FORM_ERROR.title
+                generalState.CREATE_PROJECT_ERROR?.title
+                  ? generalState.CREATE_PROJECT_ERROR.title
                   : "example: project's title"
               }
               style={{ marginTop: '3rem' }}
@@ -80,15 +93,16 @@ const CreateProject = () => {
                 dispatch(
                   setFieldAction('project_form', 'title', e.target.value)
                 )
-                dispatch(clearErrorsAction(PROJECT_FORM_ERROR))
+                dispatch(clearErrorsAction(CREATE_PROJECT_ERROR))
               }}
-              error={Boolean(generalState[PROJECT_FORM_ERROR]?.title)}
+              error={Boolean(generalState[CREATE_PROJECT_ERROR]?.title)}
+              disabled={generalState.project_form___id}
             />
             <TextField
               label="description"
               helperText={
-                generalState.PROJECT_FORM_ERROR?.description
-                  ? generalState.PROJECT_FORM_ERROR.description
+                generalState.CREATE_PROJECT_ERROR?.description
+                  ? generalState.CREATE_PROJECT_ERROR.description
                   : "example: project's description"
               }
               style={{ marginTop: '3rem' }}
@@ -99,15 +113,11 @@ const CreateProject = () => {
               value={generalState.project_form__description}
               onChange={(e) => {
                 dispatch(
-                  setFieldAction(
-                    'project_form',
-                    'description',
-                    e.target.value
-                  )
+                  setFieldAction('project_form', 'description', e.target.value)
                 )
-                dispatch(clearErrorsAction(PROJECT_FORM_ERROR))
+                dispatch(clearErrorsAction(CREATE_PROJECT_ERROR))
               }}
-              error={Boolean(generalState[PROJECT_FORM_ERROR]?.description)}
+              error={Boolean(generalState[CREATE_PROJECT_ERROR]?.description)}
             />
             <div className="tags-form">
               <TextField
@@ -168,7 +178,7 @@ const CreateProject = () => {
                 color="primary"
                 type="submit"
               >
-                Save
+                {generalState.project_form___id ? 'Update' : 'Create'}
               </Button>
             </CardActions>
           </Card>
