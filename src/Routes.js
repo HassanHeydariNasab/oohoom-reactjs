@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react'
 
 import Authentication from './components/pages/Authentication'
-import CreateProject from './components/pages/CreateProject'
 import Home from './components/pages/Home'
+import ProjectForm from './components/pages/ProjectForm'
 import { setRouteAction } from './redux/actions/router'
 import store from './redux/store'
 import { useSelector } from 'react-redux'
 
 const routes = {
   empty: { url: '/empty', component: <React.Fragment /> },
+  not_found: { url: '/404', component: <div>Not Found!</div> },
   auth: {
     url: '/auth',
     component: <Authentication />,
   },
   home: { url: '/', component: <Home /> },
-  create_project: { url: '/create_project', component: <CreateProject /> },
+  project_form: { url: '/project', component: <ProjectForm /> },
 }
 
 var url_to_name = {}
@@ -30,7 +31,7 @@ export function navigate(route_name, payload = {}) {
 
 function Routes() {
   useEffect(() => {
-    navigate(url_to_name[window.location.pathname])
+    navigate(url_to_name[window.location.pathname] || 'not_found')
   }, [])
   const routerState = useSelector((state) => state.router)
   return <>{routes[routerState.route.name].component}</>

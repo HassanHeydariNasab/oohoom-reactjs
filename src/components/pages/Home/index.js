@@ -31,14 +31,14 @@ const Home = () => {
   const projectsState = useSelector((state) => state.projects)
   const authenticationState = useSelector((state) => state.authentication)
   return (
-    <div className="projects-parent-container">
+    <div className="project-parent-container">
       {authenticationState.user?.role !== 'employee' ? (
         <Button
           style={{ marginBottom: '1rem' }}
           endIcon={<Add />}
           onClick={() => {
             if (window.localStorage.getItem('token')) {
-              navigate('create_project')
+              navigate('project_form')
             } else {
               navigate('auth')
             }

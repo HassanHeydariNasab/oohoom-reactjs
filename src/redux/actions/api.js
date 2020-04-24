@@ -1,8 +1,8 @@
 import {
   CODE,
-  CREATE_PROJECT,
   FETCH_PROJECTS,
   FETCH_USER,
+  PROJECT_FORM,
   REGISTRATION,
   TOKEN,
 } from '../constants/api'
@@ -63,7 +63,7 @@ export const fetchProjectsAction = (state, skip = 0, limit = 10) => ({
 })
 
 export const createProjectAction = (title, description, skills) => ({
-  type: CREATE_PROJECT,
+  type: PROJECT_FORM,
   request: {
     url: '/v1/projects',
     method: 'POST',

@@ -82,3 +82,34 @@ div#root {
     font-size: 12px;
   }
 }
+
+div.project-parent-container {
+  width: 100%;
+  max-width: 50rem;
+  min-height: 80vh;
+  padding: 2rem 0px;
+}
+
+div.project-container {
+  width: 100%;
+}
+
+div.tags-form {
+  display: flex;
+  align-items: baseline;
+  margin: 3rem 0px;
+}
+
+div.tags-container {
+  display: flex;
+  align-items: baseline;
+  padding: 1rem;
+}
+
+div.tag {
+  margin: 0px 0.2rem !important;
+}
+
+.project-card {
+  margin-bottom: 1.6rem;
+}

@@ -1,2 +1,4 @@
 export const SET_FIELD = 'SET_FIELD'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
+export const ADD_ITEM_TO_ARRAY = 'ADD_ITEM_TO_ARRAY'
+export const REMOVE_ITEM_FROM_ARRAY = 'REMOVE_ITEM_FROM_ARRAY'
