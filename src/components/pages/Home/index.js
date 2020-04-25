@@ -1,5 +1,6 @@
 import './index.css'
 
+import { Add, EditOutlined } from '@material-ui/icons'
 import {
   Button,
   Card,
@@ -7,11 +8,13 @@ import {
   CardHeader,
   Chip,
   Divider,
+  IconButton,
 } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import {
   clearErrorsAction,
   clearFormAction,
+  setFieldAction,
 } from '../../../redux/actions/general'
 import {
   fetchProjectsAction,
@@ -19,7 +22,6 @@ import {
 } from '../../../redux/actions/api'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Add } from '@material-ui/icons'
 import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import { navigate } from '../../../Routes'
 
@@ -56,7 +58,32 @@ const Home = () => {
       <div className="projects-container">
         {projectsState.projects.map((project) => (
           <Card key={project._id.$oid} className="project-card">
-            <CardHeader title={project.title} />
+            <CardHeader
+              title={project.title}
+              action={
+                project.employer._id.$oid ===
+                authenticationState.user?._id.$oid ? (
+                  <IconButton
+                    onClick={(e) => {
+                      for (let field of [
+                        '_id',
+                        'title',
+                        'description',
+                        'skills',
+                      ]) {
+                        dispatch(
+                          setFieldAction('project_form', field, project[field])
+                        )
+                      }
+                      dispatch(clearErrorsAction(CREATE_PROJECT_ERROR))
+                      navigate('project_form')
+                    }}
+                  >
+                    <EditOutlined />
+                  </IconButton>
+                ) : null
+              }
+            />
             <CardContent>{project.description}</CardContent>
             <div className="tags-container">
               {project.skills.map((skill) => (
