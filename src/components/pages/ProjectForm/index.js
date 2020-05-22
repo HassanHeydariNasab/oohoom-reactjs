@@ -35,10 +35,9 @@ import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import { navigate } from '../../../Routes'
 import { setLoadingAction } from '../../../redux/actions/notification'
 
-const CreateProject = () => {
+const CreateProject = ({back_url = '/'}) => {
   useEffect(() => {}, [])
   const dispatch = useDispatch()
-  const projectState = useSelector((state) => state.project)
   const generalState = useSelector((state) => state.general)
   const notificationState = useSelector((state) => state.notification)
   return (
@@ -47,7 +46,7 @@ const CreateProject = () => {
         style={{ marginBottom: '1rem' }}
         startIcon={<KeyboardArrowLeft />}
         onClick={() => {
-          navigate('home')
+          navigate(back_url)
         }}
       >
         Back

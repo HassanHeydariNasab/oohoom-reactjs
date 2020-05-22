@@ -1,5 +1,6 @@
 import './Layout.css'
 
+import { AccountCircle, ExitToAppOutlined } from '@material-ui/icons'
 import { AppBar, Button, LinearProgress, Toolbar } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import Routes, { navigate } from './Routes'
@@ -10,9 +11,10 @@ import {
 } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { AccountCircle } from '@material-ui/icons'
 import { Home } from '@material-ui/icons'
+import { LOGOUT } from './redux/constants/authentication'
 import { fetchUserAction } from './redux/actions/api'
+import { logoutAction } from './redux/actions/authentication'
 
 const theme = createMuiTheme({})
 
@@ -41,22 +43,33 @@ export default function MUI() {
           <Button
             color="inherit"
             onClick={() => {
-              navigate('home')
+              navigate('/', 'home', {})
             }}
             startIcon={<Home />}
           >
             Home
           </Button>
           {authenticationState.user ? (
-            <Button
-              color="inherit"
-              onClick={() => {
-                navigate('users_me')
-              }}
-              startIcon={<AccountCircle />}
-            >
-              {authenticationState.user.name}
-            </Button>
+            <>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  navigate('users_me')
+                }}
+                startIcon={<AccountCircle />}
+              >
+                {authenticationState.user.name}
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  dispatch(logoutAction(true))
+                }}
+                startIcon={<ExitToAppOutlined />}
+              >
+                Logout
+              </Button>
+            </>
           ) : (
             <Button
               color="inherit"

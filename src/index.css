@@ -83,15 +83,22 @@ div#root {
   }
 }
 
-div.project-parent-container {
+div.projects-parent-container, div.project-parent-container {
   width: 100%;
   max-width: 50rem;
   min-height: 80vh;
   padding: 2rem 0px;
 }
 
-div.project-container {
+div.projects-container, div.project-container {
   width: 100%;
+}
+
+.project-card {
+  margin-bottom: 1.6rem;
+  width: 100%;
+  max-width: 50rem;
+  padding: 2rem 0px;
 }
 
 div.tags-form {
@@ -104,12 +111,9 @@ div.tags-container {
   display: flex;
   align-items: baseline;
   padding: 1rem;
+  flex-wrap: wrap;
 }
 
 div.tag {
   margin: 0px 0.2rem !important;
-}
-
-.project-card {
-  margin-bottom: 1.6rem;
 }

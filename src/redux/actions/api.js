@@ -1,6 +1,7 @@
 import {
   CODE,
   CREATE_PROJECT,
+  FETCH_PROJECT,
   FETCH_PROJECTS,
   FETCH_USER,
   REGISTRATION,
@@ -59,6 +60,14 @@ export const fetchProjectsAction = (state, skip = 0, limit = 10) => ({
   type: FETCH_PROJECTS,
   request: {
     url: `/v1/projects?state=${state}&skip=${skip}&limit=${limit}`,
+    method: 'GET',
+  },
+})
+
+export const fetchProjectAction = (project_id) => ({
+  type: FETCH_PROJECT,
+  request: {
+    url: `/v1/projects/${project_id}`,
     method: 'GET',
   },
 })

@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
+import Project from '../Project'
 import { navigate } from '../../../Routes'
 
 const Home = () => {
@@ -37,7 +38,7 @@ const Home = () => {
   const projectsState = useSelector((state) => state.projects)
   const authenticationState = useSelector((state) => state.authentication)
   return (
-    <div className="project-parent-container">
+    <div className="projects-parent-container">
       {authenticationState.user?.role !== 'employee' ? (
         <Button
           style={{ marginBottom: '1rem' }}
@@ -46,7 +47,7 @@ const Home = () => {
             if (window.localStorage.getItem('token')) {
               dispatch(clearFormAction('project_form'))
               dispatch(clearErrorsAction(CREATE_PROJECT_ERROR))
-              navigate('project_form')
+              navigate(`/project-form/?back_url=${window.location.pathname}`)
             } else {
               navigate('auth')
             }
@@ -57,45 +58,7 @@ const Home = () => {
       ) : null}
       <div className="projects-container">
         {projectsState.projects.map((project) => (
-          <Card key={project._id.$oid} className="project-card">
-            <CardHeader
-              title={project.title}
-              action={
-                project.employer._id.$oid ===
-                authenticationState.user?._id.$oid ? (
-                  <IconButton
-                    onClick={(e) => {
-                      for (let field of [
-                        '_id',
-                        'title',
-                        'description',
-                        'skills',
-                      ]) {
-                        dispatch(
-                          setFieldAction('project_form', field, project[field])
-                        )
-                      }
-                      dispatch(clearErrorsAction(CREATE_PROJECT_ERROR))
-                      navigate('project_form')
-                    }}
-                  >
-                    <EditOutlined />
-                  </IconButton>
-                ) : null
-              }
-            />
-            <CardContent>{project.description}</CardContent>
-            <div className="tags-container">
-              {project.skills.map((skill) => (
-                <Chip
-                  key={skill}
-                  label={skill}
-                  onClick={() => {}}
-                  className="tag"
-                />
-              ))}
-            </div>
-          </Card>
+          <Project project={project} key={project._id.$oid} />
         ))}
       </div>
     </div>
