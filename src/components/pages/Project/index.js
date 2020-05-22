@@ -1,25 +1,24 @@
 import './index.css'
 
-import { Add, EditOutlined } from '@material-ui/icons'
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
   Chip,
-  Divider,
   IconButton,
+  Typography,
+  useTheme,
 } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import {
   clearErrorsAction,
-  clearFormAction,
   setFieldAction,
 } from '../../../redux/actions/general'
 import { fetchProjectAction, fetchUserAction } from '../../../redux/actions/api'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
+import { EditOutlined } from '@material-ui/icons'
 import { navigate } from '../../../Routes'
 
 // if project_id is provided, one project will be fetched. it's suitable for showing one project.
@@ -27,7 +26,6 @@ import { navigate } from '../../../Routes'
 const Project = ({ project_title = null, project = {} }) => {
   useEffect(() => {
     if (project_title) {
-      console.log('we have project_title', project_title)
       dispatch(fetchProjectAction(project_title))
     } else {
     }
@@ -39,24 +37,46 @@ const Project = ({ project_title = null, project = {} }) => {
   const projectState = useSelector((state) => state.project)
   const authenticationState = useSelector((state) => state.authentication)
   const _project = project_title ? projectState : project
+  const theme = useTheme()
   return (
     <Card className="project-card">
       <CardHeader
-        title={_project.title}
-        titleTypographyProps={{
-          onClick: (e) => {
-            if (!project_title) {
-              navigate(`/projects/${project.title}/`)
-            }
-          },
-          style: { cursor: project_title ? 'auto' : 'pointer' },
-        }}
+        title={
+          <Typography variant="h5">
+            <a
+              href={`/projects/${_project.title}/`}
+              onClick={(e) => {
+                if (e.ctrlKey) {
+                  return
+                }
+                e.preventDefault()
+                e.stopPropagation()
+                if (!project_title) {
+                  navigate(`/projects/${_project.title}/`)
+                }
+              }}
+              style={{
+                textDecoration: 'none',
+                color: theme.palette.text.primary,
+              }}
+            >
+              {_project.title}
+            </a>
+          </Typography>
+        }
+        disableTypography
         action={
           _project?.employer?._id.$oid ===
           authenticationState.user?._id.$oid ? (
             <IconButton
-              onClick={(e) => {
-                for (let field of ['_id', 'title', 'description', 'skills', 'skill']) {
+              onClick={() => {
+                for (let field of [
+                  '_id',
+                  'title',
+                  'description',
+                  'skills',
+                  'skill',
+                ]) {
                   dispatch(
                     setFieldAction('project_form', field, _project[field])
                   )
