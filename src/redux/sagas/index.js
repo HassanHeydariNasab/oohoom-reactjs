@@ -36,16 +36,16 @@ export default function* root() {
   })
   yield takeEvery(TOKEN_SUCCESS, function* (action) {
     window.localStorage.setItem('token', action.data.token)
-    yield navigate('home')
+    yield navigate('/')
   })
   yield takeEvery(REGISTRATION_SUCCESS, function* (action) {
     window.localStorage.setItem('token', action.data.token)
-    yield navigate('home')
+    yield navigate('/')
   })
   yield takeEvery(LOGOUT, function* (action) {
     window.localStorage.clear()
     if (action.payload.should_goto_home) {
-      yield navigate('home')
+      yield navigate('/')
     }
   })
 

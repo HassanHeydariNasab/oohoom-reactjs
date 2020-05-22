@@ -54,7 +54,7 @@ export default function MUI() {
               <Button
                 color="inherit"
                 onClick={() => {
-                  navigate('users_me')
+                  navigate('/users/me')
                 }}
                 startIcon={<AccountCircle />}
               >
@@ -74,7 +74,7 @@ export default function MUI() {
             <Button
               color="inherit"
               onClick={() => {
-                navigate('auth')
+                navigate('/auth')
               }}
               variant="outlined"
               startIcon={<AccountCircle />}
