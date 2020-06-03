@@ -74,7 +74,11 @@ export default function MUI() {
             <Button
               color="inherit"
               onClick={() => {
-                navigate('/auth')
+                let back_url = window.location.pathname
+                if (back_url === '/auth/') {
+                  back_url = '/'
+                }
+                navigate(`/auth/?back_url=${back_url}`)
               }}
               variant="outlined"
               startIcon={<AccountCircle />}

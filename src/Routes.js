@@ -15,7 +15,7 @@ const routes = {
     component: (params) => <div>Not Found!</div>,
   },
   auth: {
-    url_regex: '/auth',
+    url_regex: /\/auth\/\?back_url=(?<back_url>.*)/,
     component: (props) => <Authentication {...props} />,
   },
   project_form: {

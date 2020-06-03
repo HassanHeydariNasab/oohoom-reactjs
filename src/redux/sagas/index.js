@@ -4,7 +4,7 @@ import {
   TOKEN_SUCCESS,
 } from '../constants/api'
 import { createRequestInstance, watchRequests } from 'redux-saga-requests'
-import { delay, put, takeEvery } from 'redux-saga/effects'
+import { delay, put, takeEvery, select } from 'redux-saga/effects'
 import {
   slideDisplayFlexAction,
   slideFadeInAction,
@@ -36,11 +36,13 @@ export default function* root() {
   })
   yield takeEvery(TOKEN_SUCCESS, function* (action) {
     window.localStorage.setItem('token', action.data.token)
-    yield navigate('/')
+    const routerState = yield select((state) => state.router)
+    yield navigate(routerState.route.props.back_url)
   })
   yield takeEvery(REGISTRATION_SUCCESS, function* (action) {
     window.localStorage.setItem('token', action.data.token)
-    yield navigate('/')
+    const routerState = yield select((state) => state.router)
+    yield navigate(routerState.route.props.back_url)
   })
   yield takeEvery(LOGOUT, function* (action) {
     window.localStorage.clear()

@@ -42,7 +42,7 @@ function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
   } ${slideDisplayFlex === name ? 'display-flex' : ''}`
 }
 
-function Authentication() {
+function Authentication({ back_url = '/' }) {
   useEffect(() => {}, [])
   const dispatch = useDispatch()
   const authenticationState = useSelector((state) => state.authentication)

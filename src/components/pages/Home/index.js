@@ -49,7 +49,7 @@ const Home = () => {
               dispatch(clearErrorsAction(CREATE_PROJECT_ERROR))
               navigate(`/project-form/?back_url=${window.location.pathname}`)
             } else {
-              navigate('/auth')
+              navigate(`/auth/?back_url=${window.location.pathname}`)
             }
           }}
         >
