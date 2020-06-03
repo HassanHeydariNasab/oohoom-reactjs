@@ -26,7 +26,8 @@ const routes = {
     url_regex: /\/projects\/(?<project_title>.*)\//,
     component: (props) => <Project {...props} />,
   },
-  home: { url_regex: /\//, component: (props) => <Home {...props} /> },
+  home: { url_regex: /\/$/, component: (props) => <Home {...props} /> },
+  not_matched: { url_regex: /.*/, component: (props) => <div>Not Found!</div> },
 }
 
 export function navigate(url) {
