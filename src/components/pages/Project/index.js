@@ -49,7 +49,7 @@ const Project = ({ project_title = null, project = {} }) => {
     <Card className="project-card">
       <CardHeader
         title={
-          <Typography variant="h5">
+          <Typography variant="h5" style={{ wordBreak: 'break-word' }}>
             <a
               href={`/projects/${_project.title}/`}
               onClick={(e) => {
