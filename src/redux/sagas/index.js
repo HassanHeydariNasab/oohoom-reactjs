@@ -2,6 +2,7 @@ import {
   CODE_SUCCESS,
   REGISTRATION_SUCCESS,
   TOKEN_SUCCESS,
+  ASSIGN_PROJECT_SUCCESS,
 } from '../constants/api'
 import { createRequestInstance, watchRequests } from 'redux-saga-requests'
 import { delay, put, takeEvery, select } from 'redux-saga/effects'
@@ -49,6 +50,10 @@ export default function* root() {
     if (action.payload.should_goto_home) {
       yield navigate('/')
     }
+  })
+
+  yield takeEvery(ASSIGN_PROJECT_SUCCESS, function* (action) {
+    window.location.reload()
   })
 
   yield createRequestInstance({

@@ -7,6 +7,7 @@ import {
   REGISTRATION,
   TOKEN,
   UPDATE_PROJECT,
+  ASSIGN_PROJECT,
 } from '../constants/api'
 
 export const codeAction = (mobile) => ({
@@ -94,6 +95,22 @@ export const updateProjectAction = (_id, description, skills) => ({
       action: 'update',
       _id,
       update: { description, skills },
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
+})
+
+export const assignProjectAction = (_id) => ({
+  type: ASSIGN_PROJECT,
+  request: {
+    url: '/v1/projects',
+    method: 'PATCH',
+    body: JSON.stringify({
+      action: 'assign',
+      _id,
     }),
     headers: {
       'Content-Type': 'application/json',

@@ -8,18 +8,25 @@ import {
   IconButton,
   Typography,
   useTheme,
+  Button,
+  CircularProgress,
 } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import {
   clearErrorsAction,
   setFieldAction,
 } from '../../../redux/actions/general'
-import { fetchProjectAction, fetchUserAction } from '../../../redux/actions/api'
+import {
+  fetchProjectAction,
+  fetchUserAction,
+  assignProjectAction,
+} from '../../../redux/actions/api'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import { EditOutlined } from '@material-ui/icons'
 import { navigate } from '../../../Routes'
+import { setLoadingAction } from '../../../redux/actions/notification'
 
 // if project_id is provided, one project will be fetched. it's suitable for showing one project.
 // if project is provided, no need to fetch project again. it's suitable for showing a list of projects.
@@ -66,8 +73,7 @@ const Project = ({ project_title = null, project = {} }) => {
         }
         disableTypography
         action={
-          _project?.employer?._id.$oid ===
-          authenticationState.user?._id.$oid ? (
+          _project.employer?._id.$oid === authenticationState.user?._id.$oid ? (
             <IconButton
               onClick={() => {
                 for (let field of [
@@ -87,6 +93,30 @@ const Project = ({ project_title = null, project = {} }) => {
             >
               <EditOutlined />
             </IconButton>
+          ) : authenticationState.user?.role === 'employee' ? (
+            _project.employee === undefined ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                disableElevation
+                onClick={(e) => {
+                  dispatch(assignProjectAction(_project._id))
+                  dispatch(setLoadingAction(true))
+                }}
+              >
+                Assign to me
+              </Button>
+            ) : _project.employee?._id.$oid ===
+              authenticationState.user?._id.$oid ? (
+              <Button
+                disabled
+                variant="contained"
+                color="default"
+                disableElevation
+              >
+                Assigned to me
+              </Button>
+            ) : null
           ) : null
         }
       />
