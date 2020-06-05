@@ -13,7 +13,9 @@ import {
   createMuiTheme,
   makeStyles,
 } from '@material-ui/core/styles'
+import { faIR } from '@material-ui/core/locale'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import { Home } from '@material-ui/icons'
 import { LOGOUT } from './redux/constants/authentication'
@@ -23,9 +25,12 @@ import { logoutAction } from './redux/actions/authentication'
 // Configure JSS
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] })
 
-const theme = createMuiTheme({
-  direction: 'rtl',
-})
+const theme = createMuiTheme(
+  {
+    direction: 'rtl',
+  },
+  faIR
+)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +43,7 @@ export default function MUI() {
   const authenticationState = useSelector((state) => state.authentication)
   const classes = useStyles()
   const dispatch = useDispatch()
-
+  const { t, i18n } = useTranslation()
   useEffect(() => {
     if (window.localStorage.getItem('token')) {
       dispatch(fetchUserAction('me'))
@@ -57,7 +62,7 @@ export default function MUI() {
               }}
               startIcon={<Home />}
             >
-              Home
+              {t('Home')}
             </Button>
             {authenticationState.user ? (
               <>
@@ -77,7 +82,7 @@ export default function MUI() {
                   }}
                   startIcon={<ExitToAppOutlined />}
                 >
-                  Logout
+                  {t('Logout')}
                 </Button>
               </>
             ) : (
@@ -93,7 +98,7 @@ export default function MUI() {
                 variant="outlined"
                 startIcon={<AccountCircle />}
               >
-                Login
+                {t('Login')}
               </Button>
             )}
           </Toolbar>
@@ -117,6 +122,24 @@ export default function MUI() {
         <div style={{ minHeight: theme.mixins.toolbar.minHeight }} />
         <div className="flex-container">
           <Routes />
+        </div>
+        <div style={{ padding: '4rem' }}>
+          <Button
+            variant="contained"
+            onClick={(e) => {
+              i18n.changeLanguage('en')
+            }}
+          >
+            English
+          </Button>
+          <Button
+            variant="contained"
+            onClick={(e) => {
+              i18n.changeLanguage('fa')
+            }}
+          >
+            فارسی
+          </Button>
         </div>
       </ThemeProvider>
     </StylesProvider>
