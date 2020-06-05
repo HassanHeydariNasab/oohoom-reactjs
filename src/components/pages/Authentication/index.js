@@ -42,7 +42,7 @@ function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
   } ${slideDisplayFlex === name ? 'display-flex' : ''}`
 }
 
-function Authentication({ back_url = '/' }) {
+function Authentication({ back_url = '/', t }) {
   useEffect(() => {}, [])
   const dispatch = useDispatch()
   const authenticationState = useSelector((state) => state.authentication)
@@ -60,7 +60,7 @@ function Authentication({ back_url = '/' }) {
           authenticationState.slide_display_flex
         )}
       >
-        <Typography variant="h2">Who are you?</Typography>
+        <Typography variant="h2">{t('?Who are you')}</Typography>
         <Button
           variant="outlined"
           onClick={() => {
@@ -77,7 +77,7 @@ function Authentication({ back_url = '/' }) {
           size="large"
           style={{ marginTop: '5rem' }}
         >
-          login / register
+          {t('login / register')}
         </Button>
       </div>
       <div
@@ -90,7 +90,7 @@ function Authentication({ back_url = '/' }) {
         )}
       >
         <Typography variant="h2" align="center">
-          mobile verification
+          {t('mobile verification')}
         </Typography>
         <form
           autoComplete="off"
@@ -101,11 +101,11 @@ function Authentication({ back_url = '/' }) {
           }}
         >
           <TextField
-            label="mobile"
+            label={t('mobile')}
             helperText={
               generalState[CODE_ERROR]?.mobile
                 ? generalState[CODE_ERROR].mobile
-                : 'example:00989389742591'
+                : t('example:00989389742591')
             }
             style={{ marginTop: '3rem' }}
             variant="outlined"
@@ -126,7 +126,7 @@ function Authentication({ back_url = '/' }) {
             color="primary"
             type="submit"
           >
-            Send me a sms
+            {t('Send me a sms')}
           </Button>
         </form>
       </div>
@@ -139,7 +139,7 @@ function Authentication({ back_url = '/' }) {
           authenticationState.slide_display_flex
         )}
       >
-        <Typography variant="h2">Login</Typography>
+        <Typography variant="h2">{t('Login')}</Typography>
         <form
           autoComplete="off"
           action="javascript:;"
@@ -151,12 +151,12 @@ function Authentication({ back_url = '/' }) {
           }}
         >
           <TextField
-            label="code"
+            label={t('code')}
             style={{ marginTop: '5rem' }}
             helperText={
               generalState[TOKEN_ERROR]?.code
                 ? generalState[TOKEN_ERROR].code
-                : 'code you recieved'
+                : t('code you recieved')
             }
             variant="outlined"
             fullWidth
@@ -184,7 +184,7 @@ function Authentication({ back_url = '/' }) {
               color={'primary'}
               startIcon={<KeyboardArrowLeft />}
             >
-              correct mobile
+              {t('correct mobile')}
             </Button>
             <div style={{ flex: 1 }} />
             <Button
@@ -194,7 +194,7 @@ function Authentication({ back_url = '/' }) {
               color="primary"
               type="submit"
             >
-              Login
+              {t('Login')}
             </Button>
           </div>
         </form>
@@ -208,7 +208,7 @@ function Authentication({ back_url = '/' }) {
           authenticationState.slide_display_flex
         )}
       >
-        <Typography variant="h2">Register</Typography>
+        <Typography variant="h2">{t('Register')}</Typography>
         <form
           autoComplete="off"
           action="javascript:;"
@@ -227,12 +227,12 @@ function Authentication({ back_url = '/' }) {
           }}
         >
           <TextField
-            label="code"
+            label={t('code')}
             style={{ marginTop: '5rem' }}
             helperText={
               generalState[REGISTRATION_ERROR]?.code
                 ? generalState[REGISTRATION_ERROR].code
-                : 'code you recieved'
+                : t('code you recieved')
             }
             variant="outlined"
             fullWidth
@@ -245,12 +245,12 @@ function Authentication({ back_url = '/' }) {
             type="number"
           />
           <TextField
-            label="name"
+            label={t('name')}
             style={{ marginTop: '3rem' }}
             helperText={
               generalState[REGISTRATION_ERROR]?.name
                 ? generalState[REGISTRATION_ERROR].name[0]
-                : 'valid: lowercase letters, numbers and _'
+                : t('valid: lowercase letters, numbers and _')
             }
             variant="outlined"
             fullWidth
@@ -270,7 +270,7 @@ function Authentication({ back_url = '/' }) {
               marginLeft: '1rem',
             }}
           >
-            <FormLabel component="legend">I'm an</FormLabel>
+            <FormLabel component="legend">{t("I'm an")}</FormLabel>
             <RadioGroup
               aria-label="role"
               name="role"
@@ -282,12 +282,12 @@ function Authentication({ back_url = '/' }) {
               <FormControlLabel
                 value="employee"
                 control={<Radio />}
-                label="Employee"
+                label={t('Employee')}
               />
               <FormControlLabel
                 value="employer"
                 control={<Radio />}
-                label="Employer"
+                label={t('Employer')}
               />
             </RadioGroup>
           </FormControl>
@@ -307,7 +307,7 @@ function Authentication({ back_url = '/' }) {
               color={'primary'}
               startIcon={<KeyboardArrowLeft />}
             >
-              correct mobile
+              {t('correct mobile')}
             </Button>
             <div style={{ flex: 1 }} />
             <Button
@@ -317,7 +317,7 @@ function Authentication({ back_url = '/' }) {
               color="primary"
               type="submit"
             >
-              Register
+              {t('Register')}
             </Button>
           </div>
         </form>

@@ -30,7 +30,7 @@ import { setLoadingAction } from '../../../redux/actions/notification'
 
 // if project_id is provided, one project will be fetched. it's suitable for showing one project.
 // if project is provided, no need to fetch project again. it's suitable for showing a list of projects.
-const Project = ({ project_title = null, project = {} }) => {
+const Project = ({ project_title = null, project = {}, t }) => {
   useEffect(() => {
     if (project_title) {
       dispatch(fetchProjectAction(project_title))
@@ -104,7 +104,7 @@ const Project = ({ project_title = null, project = {} }) => {
                   dispatch(setLoadingAction(true))
                 }}
               >
-                Assign to me
+                {t('Assign to me')}
               </Button>
             ) : _project.employee?._id.$oid ===
               authenticationState.user?._id.$oid ? (
@@ -114,7 +114,7 @@ const Project = ({ project_title = null, project = {} }) => {
                 color="default"
                 disableElevation
               >
-                Assigned to me
+                {t('Assigned to me')}
               </Button>
             ) : null
           ) : null

@@ -121,7 +121,7 @@ export default function MUI() {
         </div>
         <div style={{ minHeight: theme.mixins.toolbar.minHeight }} />
         <div className="flex-container">
-          <Routes />
+          <Routes t={t} />
         </div>
         <div style={{ padding: '4rem' }}>
           <Button

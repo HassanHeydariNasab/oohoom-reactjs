@@ -26,7 +26,7 @@ import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import Project from '../Project'
 import { navigate } from '../../../Routes'
 
-const Home = () => {
+const Home = ({ t }) => {
   useEffect(() => {
     dispatch(fetchProjectsAction('all', 0, 100))
 
@@ -53,12 +53,12 @@ const Home = () => {
             }
           }}
         >
-          Create project
+          {t('Create Project')}
         </Button>
       ) : null}
       <div className="projects-container">
         {projectsState.projects.map((project) => (
-          <Project project={project} key={project._id.$oid} />
+          <Project project={project} key={project._id.$oid} t={t} />
         ))}
       </div>
     </div>

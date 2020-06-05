@@ -51,13 +51,19 @@ function processed_url(url) {
   return [route_name, route_props]
 }
 
-function Routes() {
+function Routes({ t }) {
   useEffect(() => {
     navigate(window.location.pathname + window.location.search)
   }, [])
+
   const routerState = useSelector((state) => state.router)
   return (
-    <>{routes[routerState.route.name].component(routerState.route.props)}</>
+    <>
+      {routes[routerState.route.name].component({
+        ...routerState.route.props,
+        t,
+      })}
+    </>
   )
 }
 
