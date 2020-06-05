@@ -35,6 +35,9 @@ function make_theme(is_rtl = true, locale = faIR) {
   theme = createMuiTheme(
     {
       direction: is_rtl ? 'rtl' : 'ltr',
+      typography: {
+        fontFamily: 'vazir',
+      },
     },
     locale
   )
