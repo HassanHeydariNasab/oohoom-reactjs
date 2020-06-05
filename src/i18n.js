@@ -9,8 +9,10 @@ import { initReactI18next } from 'react-i18next'
 const resources = {
   en: {
     translation: {
-      'Welcome to React': 'Welcome to React and react-i18next',
       Home: 'Home',
+      mobile_example: 'example:00989389742591',
+      valid_usernames: 'valid: lowercase letters, numbers and _',
+      who_are_you: 'Who Are you?',
     },
   },
   fa: {
@@ -21,20 +23,21 @@ const resources = {
       'Assign to me': 'پذیرفتن',
       'Assigned to me': 'پذیرفتید',
       'Create Project': 'ایجاد پروژه',
-      '?Who are you': 'که هستید؟',
+      who_are_you: 'که هستید؟',
       'login / register': 'ورود / ثبت‌نام',
       'mobile verification': 'تأیید موبایل',
       Register: 'ثبت‌نام',
-      'example:00989389742591': 'مثال:00989389742591',
+      mobile_example: 'مثال:00989389742591',
       'Send me a sms': 'پیامک بفرست',
       mobile: 'موبایل',
       name: 'نام',
       "I'm an": 'منم یک',
-      Employee: 'استخدام شونده',
+      Employee: 'استخدام‌شونده',
       Employer: 'استخدام‌کننده',
       code: 'کد',
       'code you recieved': 'کدی که دریافت کردید',
       'correct mobile': 'تصحیح موبایل',
+      valid_usernames: 'مجاز: حروف کوچک، عدد و _ ',
     },
   },
 }

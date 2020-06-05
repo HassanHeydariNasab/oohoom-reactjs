@@ -13,7 +13,7 @@ import {
   createMuiTheme,
   makeStyles,
 } from '@material-ui/core/styles'
-import { faIR } from '@material-ui/core/locale'
+import { faIR, enUS } from '@material-ui/core/locale'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -22,15 +22,42 @@ import { LOGOUT } from './redux/constants/authentication'
 import { fetchUserAction } from './redux/actions/api'
 import { logoutAction } from './redux/actions/authentication'
 
-// Configure JSS
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] })
+var jss
+function make_jss(is_rtl = true) {
+  if (is_rtl) {
+    jss = create({ plugins: [...jssPreset().plugins, rtl()] })
+  } else {
+    jss = create({ plugins: [...jssPreset().plugins] })
+  }
+}
+var theme
+function make_theme(is_rtl = true, locale = faIR) {
+  theme = createMuiTheme(
+    {
+      direction: is_rtl ? 'rtl' : 'ltr',
+    },
+    locale
+  )
+}
+make_jss(true)
+make_theme(true, faIR)
 
-const theme = createMuiTheme(
-  {
-    direction: 'rtl',
-  },
-  faIR
-)
+const switch_language_to_en = (e, i18n) => {
+  i18n.changeLanguage('en')
+  document.getElementsByTagName('html')[0].dir = 'ltr'
+  document.getElementsByTagName('html')[0].lang = 'en'
+  make_jss(false)
+  make_theme(false, enUS)
+  window.localStorage.setItem('language', 'en')
+}
+const switch_language_to_fa = (e, i18n) => {
+  i18n.changeLanguage('fa')
+  document.getElementsByTagName('html')[0].dir = 'rtl'
+  document.getElementsByTagName('html')[0].lang = 'fa'
+  make_jss(true)
+  make_theme(true, faIR)
+  window.localStorage.setItem('language', 'fa')
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +74,12 @@ export default function MUI() {
   useEffect(() => {
     if (window.localStorage.getItem('token')) {
       dispatch(fetchUserAction('me'))
+    }
+    let language = window.localStorage.getItem('language')
+    if (language === 'en') {
+      switch_language_to_en(null, i18n)
+    } else {
+      switch_language_to_fa(null, i18n)
     }
   }, [])
 
@@ -127,7 +160,7 @@ export default function MUI() {
           <Button
             variant="contained"
             onClick={(e) => {
-              i18n.changeLanguage('en')
+              switch_language_to_en(e, i18n)
             }}
           >
             English
@@ -135,7 +168,7 @@ export default function MUI() {
           <Button
             variant="contained"
             onClick={(e) => {
-              i18n.changeLanguage('fa')
+              switch_language_to_fa(e, i18n)
             }}
           >
             فارسی

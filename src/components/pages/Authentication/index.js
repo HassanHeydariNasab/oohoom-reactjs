@@ -60,7 +60,7 @@ function Authentication({ back_url = '/', t }) {
           authenticationState.slide_display_flex
         )}
       >
-        <Typography variant="h2">{t('?Who are you')}</Typography>
+        <Typography variant="h2">{t('who_are_you')}</Typography>
         <Button
           variant="outlined"
           onClick={() => {
@@ -105,7 +105,7 @@ function Authentication({ back_url = '/', t }) {
             helperText={
               generalState[CODE_ERROR]?.mobile
                 ? generalState[CODE_ERROR].mobile
-                : t('example:00989389742591')
+                : t('mobile_example')
             }
             style={{ marginTop: '3rem' }}
             variant="outlined"
@@ -250,7 +250,7 @@ function Authentication({ back_url = '/', t }) {
             helperText={
               generalState[REGISTRATION_ERROR]?.name
                 ? generalState[REGISTRATION_ERROR].name[0]
-                : t('valid: lowercase letters, numbers and _')
+                : t('valid_usernames')
             }
             variant="outlined"
             fullWidth
