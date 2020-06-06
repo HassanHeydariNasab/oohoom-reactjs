@@ -27,6 +27,7 @@ import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import { EditOutlined } from '@material-ui/icons'
 import { navigate } from '../../../Routes'
 import { setLoadingAction } from '../../../redux/actions/notification'
+import UserAvatar from '../../UserAvatar'
 
 // if project_id is provided, one project will be fetched. it's suitable for showing one project.
 // if project is provided, no need to fetch project again. it's suitable for showing a list of projects.
@@ -120,12 +121,18 @@ const Project = ({ project_title = null, project = {}, t }) => {
           ) : null
         }
       />
-      <CardContent>{_project.description}</CardContent>
+      <CardContent>
+        <UserAvatar t={t} name={_project.employer?.name} />
+        {_project.description}
+      </CardContent>
       <div className="tags-container">
         {_project.skills?.map((skill) => (
           <Chip key={skill} label={skill} onClick={() => {}} className="tag" />
         ))}
       </div>
+      {_project?.employee ? (
+        <UserAvatar t={t} name={_project.employee.name} title={'employee'} />
+      ) : null}
     </Card>
   )
 }

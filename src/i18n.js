@@ -47,6 +47,7 @@ const resources = {
       type_a_skill: 'یک برچسب بنویسید و + را بزنید.',
       Create: 'ایجاد',
       Update: 'به‌روزرسانی',
+      employee: 'مجری',
     },
   },
 }
