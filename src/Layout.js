@@ -36,7 +36,7 @@ function make_theme(is_rtl = true, locale = faIR) {
     {
       direction: is_rtl ? 'rtl' : 'ltr',
       typography: {
-        fontFamily: 'vazir',
+        fontFamily: 'vazir, Roboto',
       },
     },
     locale
