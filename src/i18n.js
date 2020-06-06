@@ -13,6 +13,8 @@ const resources = {
       mobile_example: 'example:00989389742591',
       valid_usernames: 'valid: lowercase letters, numbers and _',
       who_are_you: 'Who Are you?',
+      project_title_helper_text: 'A unique title',
+      type_a_skill: 'Type a tag and press +',
     },
   },
   fa: {
@@ -38,6 +40,13 @@ const resources = {
       'code you recieved': 'کدی که دریافت کردید',
       'correct mobile': 'تصحیح موبایل',
       valid_usernames: 'مجاز: حروف کوچک، عدد و _ ',
+      Back: 'بازگشت',
+      title: 'تیتر',
+      project_title_helper_text: 'یک تیتر متمایز و یکتا',
+      description: 'توضیحات',
+      type_a_skill: 'یک برچسب بنویسید و + را بزنید.',
+      Create: 'ایجاد',
+      Update: 'به‌روزرسانی',
     },
   },
 }

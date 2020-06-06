@@ -35,7 +35,7 @@ import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
 import { navigate } from '../../../Routes'
 import { setLoadingAction } from '../../../redux/actions/notification'
 
-const CreateProject = ({back_url = '/'}) => {
+const CreateProject = ({ back_url = '/', t }) => {
   useEffect(() => {}, [])
   const dispatch = useDispatch()
   const generalState = useSelector((state) => state.general)
@@ -49,7 +49,7 @@ const CreateProject = ({back_url = '/'}) => {
           navigate(back_url)
         }}
       >
-        Back
+        {t('Back')}
       </Button>
       <div className="project-container">
         <form
@@ -78,11 +78,11 @@ const CreateProject = ({back_url = '/'}) => {
         >
           <Card style={{ padding: '1rem' }}>
             <TextField
-              label="title"
+              label={t('title')}
               helperText={
                 generalState.CREATE_PROJECT_ERROR?.title
                   ? generalState.CREATE_PROJECT_ERROR.title
-                  : "example: project's title"
+                  : t('project_title_helper_text')
               }
               style={{ marginTop: '3rem' }}
               variant="outlined"
@@ -98,11 +98,11 @@ const CreateProject = ({back_url = '/'}) => {
               disabled={generalState.project_form___id}
             />
             <TextField
-              label="description"
+              label={t('description')}
               helperText={
                 generalState.CREATE_PROJECT_ERROR?.description
                   ? generalState.CREATE_PROJECT_ERROR.description
-                  : "example: project's description"
+                  : ''
               }
               style={{ marginTop: '3rem' }}
               variant="outlined"
@@ -120,7 +120,7 @@ const CreateProject = ({back_url = '/'}) => {
             />
             <div className="tags-form">
               <TextField
-                helperText="type a skill and press +"
+                helperText={t('type_a_skill')}
                 variant="outlined"
                 InputProps={{
                   endAdornment: (
@@ -177,7 +177,7 @@ const CreateProject = ({back_url = '/'}) => {
                 color="primary"
                 type="submit"
               >
-                {generalState.project_form___id ? 'Update' : 'Create'}
+                {generalState.project_form___id ? t('Update') : t('Create')}
               </Button>
             </CardActions>
           </Card>
