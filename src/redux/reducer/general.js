@@ -14,7 +14,11 @@ export default (state = initial, action) => {
   if (action.type.endsWith('_ERROR')) {
     if (action.error.status === 401) {
       window.localStorage.removeItem('token')
-      window.location = '/auth'
+      window.location =
+        '/auth/?back_url=' + window.location.pathname + window.location.search
+    } else if (action.error.status === 403) {
+      window.location =
+        '/auth/?back_url=' + window.location.pathname + window.location.search
     } else {
       return { ...state, [`${action.type}`]: action.error.data.description }
     }

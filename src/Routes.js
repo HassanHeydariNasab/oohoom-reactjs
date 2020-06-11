@@ -11,22 +11,22 @@ import { useSelector } from 'react-redux'
 const routes = {
   empty: { url_regex: /\/empty\//, component: (params) => <React.Fragment /> },
   not_found: {
-    url_regex: /\/404\//,
+    url_regex: /^\/404\//,
     component: (params) => <div>Not Found!</div>,
   },
   auth: {
-    url_regex: /\/auth\/\?back_url=(?<back_url>.*)/,
+    url_regex: /^\/auth\/\?back_url=(?<back_url>.*)/,
     component: (props) => <Authentication {...props} />,
   },
   project_form: {
-    url_regex: /\/project-form\/\?back_url=(?<back_url>.*)/,
+    url_regex: /^\/project-form\/\?back_url=(?<back_url>.*)/,
     component: (props) => <ProjectForm {...props} />,
   },
   project: {
-    url_regex: /\/projects\/(?<project_title>.*)\//,
+    url_regex: /^\/projects\/(?<project_title>.*)\//,
     component: (props) => <Project {...props} />,
   },
-  home: { url_regex: /\/$/, component: (props) => <Home {...props} /> },
+  home: { url_regex: /^\/$/, component: (props) => <Home {...props} /> },
   not_matched: { url_regex: /.*/, component: (props) => <div>Not Found!</div> },
 }
 
