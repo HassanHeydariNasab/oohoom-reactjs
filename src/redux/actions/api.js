@@ -11,6 +11,7 @@ import {
   FETCH_INPUT_FILES,
   FETCH_OUTPUT_FILES,
   CREATE_FILE,
+  CLEAR_OUTPUT_FILES,
 } from '../constants/api'
 
 export const codeAction = (mobile) => ({
@@ -158,3 +159,7 @@ export const createFileAction = (data) => ({
   },
 })
 
+export const clearOutputFilesAction = () => ({
+  type: CLEAR_OUTPUT_FILES,
+  payload: {},
+})

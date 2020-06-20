@@ -7,6 +7,7 @@ import {
   FETCH_USER_SUCCESS,
   FETCH_INPUT_FILES_SUCCESS,
   CREATE_FILE_SUCCESS,
+  CREATE_PROJECT_SUCCESS,
 } from '../constants/api'
 import {
   delay,
@@ -25,7 +26,11 @@ import {
 
 import { LOGOUT } from '../constants/authentication'
 import { navigate } from '../../Routes'
-import { fetchInputFilesAction, fetchOutputFilesAction } from '../actions/api'
+import {
+  fetchInputFilesAction,
+  fetchOutputFilesAction,
+  clearOutputFilesAction,
+} from '../actions/api'
 import takeAll from './takeAll'
 
 export default function* api() {
@@ -63,9 +68,15 @@ export default function* api() {
   yield takeEvery(ASSIGN_PROJECT_SUCCESS, function* (action) {
     yield window.location.reload()
   })
+
   yield takeEvery(CREATE_FILE_SUCCESS, function* (action) {
     yield window.location.reload()
   })
+
+  yield takeEvery(CREATE_PROJECT_SUCCESS, function* (action) {
+    yield navigate(`/projects/${action.data._id.$oid}/`)
+  })
+
   if (window.localStorage.getItem('token')) {
     yield call(takeAll, [FETCH_PROJECT_SUCCESS, FETCH_USER_SUCCESS], function* (
       actions
@@ -81,13 +92,18 @@ export default function* api() {
             project_action.data.employer._id.$oid === user_action.data._id.$oid
           ) {
             yield put(fetchOutputFilesAction(project_action.data._id.$oid))
+          } else {
+            yield put(clearOutputFilesAction()) // clear recent project's files
           }
+        } else {
+          yield put(clearOutputFilesAction()) // clear recent project's files
         }
       }
     })
   } else {
     yield takeEvery(FETCH_PROJECT_SUCCESS, function* (action) {
       yield put(fetchInputFilesAction(action.data._id.$oid))
+      yield put(clearOutputFilesAction()) // clear recent project's files
     })
   }
 }

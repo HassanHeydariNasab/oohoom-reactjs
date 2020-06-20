@@ -37,7 +37,7 @@ const Project = ({ project_id = null, project = {}, t }) => {
       dispatch(fetchProjectAction(project_id))
     } else {
     }
-    if (window.localStorage.getItem('token')) {
+    if (window.localStorage.getItem('token') && project_id) {
       dispatch(fetchUserAction('me'))
     }
   }, [])
@@ -107,7 +107,7 @@ const Project = ({ project_id = null, project = {}, t }) => {
                 >
                   {t('Assign to me')}
                 </Button>
-              ) : _project.employee?._id.$oid ===
+              ) : _project.employee._id.$oid ===
                 authenticationState.user?._id.$oid ? (
                 <Button
                   disabled
@@ -139,22 +139,25 @@ const Project = ({ project_id = null, project = {}, t }) => {
                 authenticationState.user?._id.$oid
               }
               t={t}
+              key={`${project_id}_in`}
             />
-            {(_project.employer?._id.$oid ===
-              authenticationState.user?._id.$oid ||
-              _project.employee?._id.$oid ===
-                authenticationState.user?._id.$oid) && (
-              <Files
-                files={projectState.output_files}
-                kind={'output'}
-                project_id={_project._id ? _project._id.$oid : null}
-                has_upload_permission={
-                  _project.employee?._id.$oid ===
-                  authenticationState.user?._id.$oid
-                }
-                t={t}
-              />
-            )}
+            {authenticationState.user &&
+              (_project.employer?._id.$oid ===
+                authenticationState.user?._id.$oid ||
+                _project.employee?._id.$oid ===
+                  authenticationState.user?._id.$oid) && (
+                <Files
+                  files={projectState.output_files}
+                  kind={'output'}
+                  project_id={_project._id ? _project._id.$oid : null}
+                  has_upload_permission={
+                    _project.employee?._id.$oid ===
+                    authenticationState.user?._id.$oid
+                  }
+                  t={t}
+                  key={`${project_id}_out`}
+                />
+              )}
           </>
         ) : null}
         <div className="tags-container">

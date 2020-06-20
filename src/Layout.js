@@ -82,9 +82,6 @@ export default function MUI() {
   const dispatch = useDispatch()
   const { t, i18n } = useTranslation()
   useEffect(() => {
-    if (window.localStorage.getItem('token')) {
-      dispatch(fetchUserAction('me'))
-    }
     let language = window.localStorage.getItem('language')
     if (language === 'en') {
       switch_language_to_en(null, i18n)

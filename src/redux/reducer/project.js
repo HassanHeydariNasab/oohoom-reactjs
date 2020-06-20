@@ -5,6 +5,7 @@ import {
   FETCH_INPUT_FILES_ERROR,
   FETCH_OUTPUT_FILES_SUCCESS,
   FETCH_OUTPUT_FILES_ERROR,
+  CLEAR_OUTPUT_FILES,
 } from '../constants/api'
 
 const initial = { input_files: [], output_files: [] }
@@ -32,6 +33,8 @@ export default (state = initial, action) => {
       }
     case FETCH_OUTPUT_FILES_ERROR:
       return { ...state, errors: action.error.data.description }
+    case CLEAR_OUTPUT_FILES:
+      return { ...state, output_files: [] }
     default:
       return state
   }
