@@ -8,6 +8,9 @@ import {
   TOKEN,
   UPDATE_PROJECT,
   ASSIGN_PROJECT,
+  FETCH_INPUT_FILES,
+  FETCH_OUTPUT_FILES,
+  CREATE_FILE,
 } from '../constants/api'
 
 export const codeAction = (mobile) => ({
@@ -118,3 +121,40 @@ export const assignProjectAction = (_id) => ({
     },
   },
 })
+
+export const fetchInputFilesAction = (project_id) => ({
+  type: FETCH_INPUT_FILES,
+  request: {
+    url: `/v1/files?project_id=${project_id}&kind=input`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
+})
+
+export const fetchOutputFilesAction = (project_id) => ({
+  type: FETCH_OUTPUT_FILES,
+  request: {
+    url: `/v1/files?project_id=${project_id}&kind=output`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
+})
+
+export const createFileAction = (data) => ({
+  type: CREATE_FILE,
+  request: {
+    url: '/v1/files',
+    method: 'POST',
+    body: data,
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
+})
+

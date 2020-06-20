@@ -23,7 +23,7 @@ const routes = {
     component: (props) => <ProjectForm {...props} />,
   },
   project: {
-    url_regex: /^\/projects\/(?<project_title>.*)\//,
+    url_regex: /^\/projects\/(?<project_id>.*)\//,
     component: (props) => <Project {...props} />,
   },
   home: { url_regex: /^\/$/, component: (props) => <Home {...props} /> },

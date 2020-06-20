@@ -15,6 +15,8 @@ const resources = {
       who_are_you: 'Who Are you?',
       project_title_helper_text: 'A unique title',
       type_a_skill: 'Type a tag and press +',
+      input: "Employer's files",
+      output: "Employee's files",
     },
   },
   fa: {
@@ -48,6 +50,8 @@ const resources = {
       Create: 'ایجاد',
       Update: 'به‌روزرسانی',
       employee: 'مجری',
+      input: 'اسناد کارفرما',
+      output: 'اسناد مجری',
     },
   },
 }
