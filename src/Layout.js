@@ -5,7 +5,14 @@ import rtl from 'jss-rtl'
 import { StylesProvider, jssPreset } from '@material-ui/core/styles'
 
 import { AccountCircle, ExitToAppOutlined } from '@material-ui/icons'
-import { AppBar, Button, LinearProgress, Toolbar } from '@material-ui/core'
+import {
+  AppBar,
+  Button,
+  LinearProgress,
+  Toolbar,
+  ButtonGroup,
+  Divider,
+} from '@material-ui/core'
 import React, { useEffect } from 'react'
 import Routes, { navigate } from './Routes'
 import {
@@ -159,23 +166,24 @@ export default function MUI() {
         <div className="flex-container">
           <Routes t={t} />
         </div>
+        <Divider />
         <div style={{ padding: '4rem' }}>
-          <Button
-            variant="contained"
-            onClick={(e) => {
-              switch_language_to_en(e, i18n)
-            }}
-          >
-            English
-          </Button>
-          <Button
-            variant="contained"
-            onClick={(e) => {
-              switch_language_to_fa(e, i18n)
-            }}
-          >
-            فارسی
-          </Button>
+          <ButtonGroup variant="text">
+            <Button
+              onClick={(e) => {
+                switch_language_to_en(e, i18n)
+              }}
+            >
+              English
+            </Button>
+            <Button
+              onClick={(e) => {
+                switch_language_to_fa(e, i18n)
+              }}
+            >
+              فارسی
+            </Button>
+          </ButtonGroup>
         </div>
       </ThemeProvider>
     </StylesProvider>
