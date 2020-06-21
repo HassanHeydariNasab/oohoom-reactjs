@@ -121,7 +121,7 @@ const Project = ({ project_id = null, project = {}, t }) => {
             ) : null
           }
         />
-        <CardContent>
+        <CardContent className={'project-description'}>
           <UserAvatar t={t} name={_project.employer?.name} />
           {_project.description}
         </CardContent>

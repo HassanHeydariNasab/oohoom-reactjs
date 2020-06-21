@@ -132,3 +132,7 @@ a:hover,
 .link:hover {
   color: #000000;
 }
+
+div.project-description {
+  white-space: pre-wrap;
+}
