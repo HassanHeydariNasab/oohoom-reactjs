@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import {
   CODE_ERROR,
   REGISTRATION_ERROR,
@@ -42,12 +43,22 @@ function slide_class(name, slideFadeIn, slideFadeOut, slideDisplayFlex) {
   } ${slideDisplayFlex === name ? 'display-flex' : ''}`
 }
 
+const useStyles = makeStyles((theme) => ({
+  ltr: {
+    flip: false,
+    direction: 'ltr',
+  },
+}))
+
 function Authentication({ back_url = '/', t }) {
-  useEffect(() => {}, [])
+  useEffect(() => {
+    dispatch(setFieldAction('auth', 'country_code', '0098'))
+  }, [])
   const dispatch = useDispatch()
   const authenticationState = useSelector((state) => state.authentication)
   const notificationState = useSelector((state) => state.notification)
   const generalState = useSelector((state) => state.general)
+  const classes = useStyles()
 
   return (
     <div id="center-card">
@@ -96,28 +107,50 @@ function Authentication({ back_url = '/', t }) {
           autoComplete="off"
           action="javascript:;"
           onSubmit={() => {
-            dispatch(codeAction(generalState.auth__mobile))
+            let mobile = `${generalState.auth__mobile}`
+            if (mobile[0] === '0') {
+              mobile = mobile.slice(1)
+            }
+            dispatch(setFieldAction('auth', 'mobile', mobile))
+            dispatch(codeAction(generalState.auth__country_code + mobile))
             dispatch(setLoadingAction(true))
           }}
         >
-          <TextField
-            label={t('mobile')}
-            helperText={
-              generalState[CODE_ERROR]?.mobile
-                ? generalState[CODE_ERROR].mobile
-                : t('mobile_example')
-            }
-            style={{ marginTop: '3rem' }}
-            variant="outlined"
-            fullWidth
-            value={generalState.auth__mobile}
-            onChange={(e) => {
-              dispatch(setFieldAction('auth', 'mobile', e.target.value))
-              dispatch(clearErrorsAction(CODE_ERROR))
-            }}
-            error={Boolean(generalState[CODE_ERROR]?.mobile)}
-            type="tel"
-          />
+          <div className={classes.ltr}>
+            <TextField
+              label={t('country_code')}
+              helperText={t('country_code_example')}
+              className={classes.unaffected}
+              style={{ marginTop: '5rem' }}
+              variant="standard"
+              fullWidth
+              value={generalState.auth__country_code}
+              onChange={(e) => {
+                dispatch(setFieldAction('auth', 'country_code', e.target.value))
+                dispatch(clearErrorsAction(CODE_ERROR))
+              }}
+              type="tel"
+            />
+            <TextField
+              label={t('mobile')}
+              helperText={
+                generalState[CODE_ERROR]?.mobile
+                  ? generalState[CODE_ERROR].mobile
+                  : t('mobile_example')
+              }
+              className={classes.unaffected}
+              style={{ marginTop: '3rem' }}
+              variant="standard"
+              fullWidth
+              value={generalState.auth__mobile}
+              onChange={(e) => {
+                dispatch(setFieldAction('auth', 'mobile', e.target.value))
+                dispatch(clearErrorsAction(CODE_ERROR))
+              }}
+              error={Boolean(generalState[CODE_ERROR]?.mobile)}
+              type="tel"
+            />
+          </div>
           <Button
             variant="contained"
             disabled={notificationState.loading}
@@ -145,7 +178,10 @@ function Authentication({ back_url = '/', t }) {
           action="javascript:;"
           onSubmit={() => {
             dispatch(
-              tokenAction(generalState.auth__mobile, generalState.auth__code)
+              tokenAction(
+                generalState.auth__country_code + generalState.auth__mobile,
+                generalState.auth__code
+              )
             )
             dispatch(setLoadingAction(true))
           }}
@@ -215,7 +251,7 @@ function Authentication({ back_url = '/', t }) {
           onSubmit={() => {
             dispatch(
               registrationAction(
-                generalState.auth__mobile,
+                generalState.auth__country_code + generalState.auth__mobile,
                 generalState.auth__code,
                 generalState.auth__name,
                 generalState.auth__role,

@@ -10,13 +10,15 @@ const resources = {
   en: {
     translation: {
       Home: 'Home',
-      mobile_example: 'example:00989389742591',
+      mobile_example: 'example:9389742591',
       valid_usernames: 'valid: lowercase letters, numbers and _',
       who_are_you: 'Who Are you?',
       project_title_helper_text: 'A unique title',
       type_a_skill: 'Type a tag and press +',
       input: "Employer's files",
       output: "Employee's files",
+      country_code: 'country code',
+      country_code_example: 'example:0098',
     },
   },
   fa: {
@@ -31,7 +33,7 @@ const resources = {
       'login / register': 'ورود / ثبت‌نام',
       'mobile verification': 'تأیید موبایل',
       Register: 'ثبت‌نام',
-      mobile_example: 'مثال:00989389742591',
+      mobile_example: 'مثال:9389742591',
       'Send me a sms': 'پیامک بفرست',
       mobile: 'موبایل',
       name: 'نام',
@@ -52,6 +54,8 @@ const resources = {
       employee: 'مجری',
       input: 'اسناد کارفرما',
       output: 'اسناد مجری',
+      country_code: 'کد کشور',
+      country_code_example: 'مثال:0098',
     },
   },
 }
