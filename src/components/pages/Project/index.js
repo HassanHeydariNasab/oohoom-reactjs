@@ -95,7 +95,7 @@ const Project = ({ project_id = null, project = {}, t }) => {
                 <EditOutlined />
               </IconButton>
             ) : authenticationState.user?.role === 'employee' ? (
-              _project.employee === undefined ? (
+              !_project.employee ? (
                 <Button
                   variant="contained"
                   color="secondary"
