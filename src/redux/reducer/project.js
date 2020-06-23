@@ -6,9 +6,10 @@ import {
   FETCH_OUTPUT_FILES_SUCCESS,
   FETCH_OUTPUT_FILES_ERROR,
   CLEAR_OUTPUT_FILES,
+  FETCH_MESSAGES_SUCCESS,
 } from '../constants/api'
 
-const initial = { input_files: [], output_files: [] }
+const initial = { input_files: [], output_files: [], messages: [] }
 
 export default (state = initial, action) => {
   switch (action.type) {
@@ -35,6 +36,8 @@ export default (state = initial, action) => {
       return { ...state, errors: action.error.data.description }
     case CLEAR_OUTPUT_FILES:
       return { ...state, output_files: [] }
+    case FETCH_MESSAGES_SUCCESS:
+      return { ...state, messages: [...action.data] }
     default:
       return state
   }

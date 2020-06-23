@@ -12,6 +12,8 @@ import {
   FETCH_OUTPUT_FILES,
   CREATE_FILE,
   CLEAR_OUTPUT_FILES,
+  FETCH_MESSAGES,
+  CREATE_MESSAGE,
 } from '../constants/api'
 
 export const codeAction = (mobile) => ({
@@ -162,4 +164,28 @@ export const createFileAction = (data) => ({
 export const clearOutputFilesAction = () => ({
   type: CLEAR_OUTPUT_FILES,
   payload: {},
+})
+
+export const fetchMessagesAction = (project_id) => ({
+  type: FETCH_MESSAGES,
+  request: {
+    url: `/v1/messages?project_id=${project_id}`,
+    method: 'GET',
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
+})
+
+export const createMessageAction = (message) => ({
+  type: CREATE_MESSAGE,
+  request: {
+    url: '/v1/messages',
+    method: 'POST',
+    body: JSON.stringify(message),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: window.localStorage.getItem('token'),
+    },
+  },
 })

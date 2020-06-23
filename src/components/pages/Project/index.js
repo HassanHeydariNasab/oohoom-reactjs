@@ -10,6 +10,8 @@ import {
   useTheme,
   Button,
   CircularProgress,
+  Dialog,
+  Fab,
 } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import {
@@ -24,11 +26,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CREATE_PROJECT_ERROR } from '../../../redux/constants/api'
-import { EditOutlined } from '@material-ui/icons'
+import { EditOutlined, ChatTwoTone, Chat } from '@material-ui/icons'
 import { navigate } from '../../../Routes'
 import { setLoadingAction } from '../../../redux/actions/notification'
 import UserAvatar from '../../UserAvatar'
 import Files from '../../Files'
+import Messages from '../../Messages'
 
 // it's a standalone component as a page when project_id is provided
 const Project = ({ project_id = null, project = {}, t }) => {
@@ -43,6 +46,7 @@ const Project = ({ project_id = null, project = {}, t }) => {
   }, [])
   const dispatch = useDispatch()
   const projectState = useSelector((state) => state.project)
+  const generalState = useSelector((state) => state.general)
   const authenticationState = useSelector((state) => state.authentication)
   const _project = project_id ? projectState : project
   const theme = useTheme()
@@ -146,17 +150,45 @@ const Project = ({ project_id = null, project = {}, t }) => {
                 authenticationState.user?._id.$oid ||
                 _project.employee?._id.$oid ===
                   authenticationState.user?._id.$oid) && (
-                <Files
-                  files={projectState.output_files}
-                  kind={'output'}
-                  project_id={_project._id ? _project._id.$oid : null}
-                  has_upload_permission={
-                    _project.employee?._id.$oid ===
-                    authenticationState.user?._id.$oid
-                  }
-                  t={t}
-                  key={`${project_id}_out`}
-                />
+                <>
+                  <Files
+                    files={projectState.output_files}
+                    kind={'output'}
+                    project_id={_project._id ? _project._id.$oid : null}
+                    has_upload_permission={
+                      _project.employee?._id.$oid ===
+                      authenticationState.user?._id.$oid
+                    }
+                    t={t}
+                    key={`${project_id}_out`}
+                  />
+                  <Dialog
+                    fullScreen
+                    open={generalState.messages__is_messages_modal_open}
+                    onClose={() => {}}
+                  >
+                    <Messages t={t} />
+                  </Dialog>
+                  <Fab
+                    onClick={(e) => {
+                      dispatch(
+                        setFieldAction(
+                          'messages',
+                          'is_messages_modal_open',
+                          true
+                        )
+                      )
+                    }}
+                    style={{
+                      position: 'fixed',
+                      bottom: '2rem',
+                      right: '2rem',
+                      zIndex: 1000,
+                    }}
+                  >
+                    <Chat />
+                  </Fab>
+                </>
               )}
           </>
         ) : null}

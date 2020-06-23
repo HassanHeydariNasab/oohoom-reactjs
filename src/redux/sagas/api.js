@@ -8,6 +8,8 @@ import {
   FETCH_INPUT_FILES_SUCCESS,
   CREATE_FILE_SUCCESS,
   CREATE_PROJECT_SUCCESS,
+  CREATE_MESSAGE_SUCCESS,
+  FETCH_MESSAGES_SUCCESS,
 } from '../constants/api'
 import {
   delay,
@@ -30,8 +32,22 @@ import {
   fetchInputFilesAction,
   fetchOutputFilesAction,
   clearOutputFilesAction,
+  fetchMessagesAction,
 } from '../actions/api'
 import takeAll from './takeAll'
+
+function* fetchMessagesInterval(project_id) {
+  while (true) {
+    const routerState = yield select((state) => state.router)
+    if (routerState.route.name !== 'project') {
+      break
+    }
+    yield put(fetchMessagesAction(project_id))
+    yield delay(5000)
+  }
+}
+
+var should_goto_recent_message = true
 
 export default function* api() {
   yield takeEvery(CODE_SUCCESS, function* (action) {
@@ -77,6 +93,18 @@ export default function* api() {
     yield navigate(`/projects/${action.data._id.$oid}/`)
   })
 
+  yield takeEvery(CREATE_MESSAGE_SUCCESS, function* (action) {
+    should_goto_recent_message = true
+    yield put(fetchMessagesAction(action.data.project_id.$oid))
+  })
+
+  yield takeEvery(FETCH_MESSAGES_SUCCESS, function* (action) {
+    if (should_goto_recent_message) {
+      yield (window.location.hash = '#recent-message')
+    }
+    should_goto_recent_message = false
+  })
+
   if (window.localStorage.getItem('token')) {
     yield call(takeAll, [FETCH_PROJECT_SUCCESS, FETCH_USER_SUCCESS], function* (
       actions
@@ -92,16 +120,20 @@ export default function* api() {
             project_action.data.employer._id.$oid === user_action.data._id.$oid
           ) {
             yield put(fetchOutputFilesAction(project_action.data._id.$oid))
+            yield fetchMessagesInterval(project_action.data._id.$oid)
           } else {
+            console.warn(1)
             yield put(clearOutputFilesAction()) // clear recent project's files
           }
         } else {
+          console.warn(2)
           yield put(clearOutputFilesAction()) // clear recent project's files
         }
       }
     })
   } else {
     yield takeEvery(FETCH_PROJECT_SUCCESS, function* (action) {
+      console.warn(3)
       yield put(fetchInputFilesAction(action.data._id.$oid))
       yield put(clearOutputFilesAction()) // clear recent project's files
     })
