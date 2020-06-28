@@ -36,18 +36,58 @@ import {
 } from '../actions/api'
 import takeAll from './takeAll'
 
-function* fetchMessagesInterval(project_id) {
+function* fetchMessagesInterval() {
   while (true) {
     const routerState = yield select((state) => state.router)
     if (routerState.route.name !== 'project') {
-      break
+      return
     }
-    yield put(fetchMessagesAction(project_id))
-    yield delay(5000)
+    yield put(fetchMessagesAction(routerState.route.props.project_id))
+    yield delay(2000)
   }
 }
 
 var should_goto_recent_message = true
+
+function* fetchProjectFlow() {
+  while (true) {
+    if (window.localStorage.getItem('token')) {
+      yield call(
+        takeAll,
+        [FETCH_PROJECT_SUCCESS, FETCH_USER_SUCCESS],
+        function* (actions) {
+          var project_action = actions[0]
+          var user_action = actions[1]
+          yield put(fetchInputFilesAction(project_action.data._id.$oid))
+          if (user_action && user_action.data) {
+            if (project_action.data.employee) {
+              if (
+                project_action.data.employee._id.$oid ===
+                  user_action.data._id.$oid ||
+                project_action.data.employer._id.$oid ===
+                  user_action.data._id.$oid
+              ) {
+                yield put(fetchOutputFilesAction(project_action.data._id.$oid))
+                yield fetchMessagesInterval()
+              } else {
+                console.warn(1)
+                yield put(clearOutputFilesAction()) // clear recent project's files
+              }
+            } else {
+              console.warn(2)
+              yield put(clearOutputFilesAction()) // clear recent project's files
+            }
+          }
+        }
+      )
+    } else {
+      var action = yield take(FETCH_PROJECT_SUCCESS)
+      console.warn(3)
+      yield put(fetchInputFilesAction(action.data._id.$oid))
+      yield put(clearOutputFilesAction()) // clear recent project's files
+    }
+  }
+}
 
 export default function* api() {
   yield takeEvery(CODE_SUCCESS, function* (action) {
@@ -104,38 +144,5 @@ export default function* api() {
     }
     should_goto_recent_message = false
   })
-
-  if (window.localStorage.getItem('token')) {
-    yield call(takeAll, [FETCH_PROJECT_SUCCESS, FETCH_USER_SUCCESS], function* (
-      actions
-    ) {
-      var project_action = actions[0]
-      var user_action = actions[1]
-      yield put(fetchInputFilesAction(project_action.data._id.$oid))
-      if (user_action && user_action.data) {
-        if (project_action.data.employee) {
-          if (
-            project_action.data.employee._id.$oid ===
-              user_action.data._id.$oid ||
-            project_action.data.employer._id.$oid === user_action.data._id.$oid
-          ) {
-            yield put(fetchOutputFilesAction(project_action.data._id.$oid))
-            yield fetchMessagesInterval(project_action.data._id.$oid)
-          } else {
-            console.warn(1)
-            yield put(clearOutputFilesAction()) // clear recent project's files
-          }
-        } else {
-          console.warn(2)
-          yield put(clearOutputFilesAction()) // clear recent project's files
-        }
-      }
-    })
-  } else {
-    yield takeEvery(FETCH_PROJECT_SUCCESS, function* (action) {
-      console.warn(3)
-      yield put(fetchInputFilesAction(action.data._id.$oid))
-      yield put(clearOutputFilesAction()) // clear recent project's files
-    })
-  }
+  yield fetchProjectFlow()
 }
