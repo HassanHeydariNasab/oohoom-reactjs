@@ -47,7 +47,13 @@ const Messages = ({ t }) => {
       >
         <Close />
       </Fab>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          paddingBottom: '5rem',
+        }}
+      >
         {projectState.messages.map((message) => (
           <div
             key={`${message._id.$oid}`}
@@ -83,7 +89,7 @@ const Messages = ({ t }) => {
         style={{
           display: 'flex',
           width: '100%',
-          position: 'sticky',
+          position: 'fixed',
           bottom: '0px',
           backgroundColor: theme.palette.background.paper,
           boxShadow: '#bdbdbd 0px -4px 10px 0px',
