@@ -38,11 +38,14 @@ import takeAll from './takeAll'
 
 function* fetchMessagesInterval() {
   while (true) {
+    const generalState = yield select((state) => state.general)
     const routerState = yield select((state) => state.router)
-    if (routerState.route.name !== 'project') {
-      return
+    if (
+      routerState.route.name === 'project' &&
+      generalState.messages__is_messages_modal_open
+    ) {
+      yield put(fetchMessagesAction(routerState.route.props.project_id))
     }
-    yield put(fetchMessagesAction(routerState.route.props.project_id))
     yield delay(2000)
   }
 }
