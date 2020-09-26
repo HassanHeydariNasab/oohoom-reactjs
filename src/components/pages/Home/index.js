@@ -1,4 +1,4 @@
-import './index.css'
+import './index.scss'
 
 import { Add, EditOutlined } from '@material-ui/icons'
 import {

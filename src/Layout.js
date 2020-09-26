@@ -1,4 +1,4 @@
-import './Layout.css'
+import './Layout.scss'
 
 import { create } from 'jss'
 import rtl from 'jss-rtl'

@@ -20,7 +20,8 @@
     "redux-saga": "^1.1.3",
     "redux-saga-requests": "0.26.1",
     "redux-saga-requests-fetch": "0.9.7",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "sass": "^1.26.11"
   },
   "scripts": {
     "start": "react-scripts start",
