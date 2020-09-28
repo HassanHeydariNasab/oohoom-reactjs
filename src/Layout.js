@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Home } from '@material-ui/icons'
 import { LOGOUT } from './redux/constants/authentication'
-import { fetchUserAction } from './redux/actions/api'
+import { fetchAuthenticatedUserAction } from './redux/actions/api'
 import { logoutAction } from './redux/actions/authentication'
 
 var jss
@@ -88,6 +88,9 @@ export default function MUI() {
     } else {
       switch_language_to_fa(null, i18n)
     }
+    if (window.localStorage.getItem('token')) {
+      dispatch(fetchAuthenticatedUserAction())
+    }
   }, [])
 
   return (
@@ -109,7 +112,7 @@ export default function MUI() {
                 <Button
                   color="inherit"
                   onClick={() => {
-                    navigate('/users/me')
+                    navigate('/users/me/')
                   }}
                   startIcon={<AccountCircle />}
                 >

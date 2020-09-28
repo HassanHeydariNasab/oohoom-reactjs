@@ -4,7 +4,7 @@ import {
   TOKEN_SUCCESS,
   ASSIGN_PROJECT_SUCCESS,
   FETCH_PROJECT_SUCCESS,
-  FETCH_USER_SUCCESS,
+  FETCH_AUTHENTICATED_USER_SUCCESS,
   FETCH_INPUT_FILES_SUCCESS,
   CREATE_FILE_SUCCESS,
   CREATE_PROJECT_SUCCESS,
@@ -57,7 +57,7 @@ function* fetchProjectFlow() {
     if (window.localStorage.getItem('token')) {
       yield call(
         takeAll,
-        [FETCH_PROJECT_SUCCESS, FETCH_USER_SUCCESS],
+        [FETCH_PROJECT_SUCCESS, FETCH_AUTHENTICATED_USER_SUCCESS],
         function* (actions) {
           var project_action = actions[0]
           var user_action = actions[1]

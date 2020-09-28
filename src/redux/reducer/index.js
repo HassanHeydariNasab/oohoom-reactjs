@@ -5,6 +5,7 @@ import notification from './notification'
 import project from './project'
 import projects from './projects'
 import router from './router'
+import user from './user'
 
 const rootReducer = combineReducers({
   general,
@@ -13,5 +14,6 @@ const rootReducer = combineReducers({
   router,
   projects,
   project,
+  user,
 })
 export default rootReducer

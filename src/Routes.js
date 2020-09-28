@@ -4,6 +4,7 @@ import Authentication from './components/pages/Authentication'
 import Home from './components/pages/Home'
 import Project from './components/pages/Project'
 import ProjectForm from './components/pages/ProjectForm'
+import User from './components/pages/User'
 import { setRouteAction } from './redux/actions/router'
 import store from './redux/store'
 import { useSelector } from 'react-redux'
@@ -25,6 +26,10 @@ const routes = {
   project: {
     url_regex: /^\/projects\/(?<project_id>.*)\//,
     component: (props) => <Project {...props} />,
+  },
+  user: {
+    url_regex: /^\/users\/(?<user_name>.*)\//,
+    component: (props) => <User {...props} />,
   },
   home: { url_regex: /^\/$/, component: (props) => <Home {...props} /> },
   not_matched: { url_regex: /.*/, component: (props) => <div>Not Found!</div> },

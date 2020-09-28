@@ -14,6 +14,7 @@ import {
   CLEAR_OUTPUT_FILES,
   FETCH_MESSAGES,
   CREATE_MESSAGE,
+  FETCH_AUTHENTICATED_USER,
 } from '../constants/api'
 
 export const codeAction = (mobile) => ({
@@ -48,6 +49,17 @@ export const registrationAction = (mobile, code, name, role, skills) => ({
     body: JSON.stringify({ mobile, code, name, role, skills }),
     headers: {
       'Content-Type': 'application/json',
+    },
+  },
+})
+
+export const fetchAuthenticatedUserAction = () => ({
+  type: FETCH_AUTHENTICATED_USER,
+  request: {
+    url: `/v1/users/me`,
+    method: 'GET',
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
     },
   },
 })

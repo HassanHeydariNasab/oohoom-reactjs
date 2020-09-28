@@ -5,7 +5,7 @@ import {
   SLIDE_FADE_OUT,
 } from '../constants/authentication'
 
-import { FETCH_USER_SUCCESS } from '../constants/api'
+import { FETCH_AUTHENTICATED_USER_SUCCESS } from '../constants/api'
 
 const initial = {
   slide_fade_in: 'start',
@@ -16,7 +16,7 @@ const initial = {
 
 export default (state = initial, action) => {
   switch (action.type) {
-    case FETCH_USER_SUCCESS:
+    case FETCH_AUTHENTICATED_USER_SUCCESS:
       return { ...state, user: action.data }
     case LOGOUT:
       return { ...state, user: null }

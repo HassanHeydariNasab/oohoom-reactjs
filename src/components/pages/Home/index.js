@@ -18,7 +18,7 @@ import {
 } from '../../../redux/actions/general'
 import {
   fetchProjectsAction,
-  fetchUserAction,
+  fetchAuthenticatedUserAction,
 } from '../../../redux/actions/api'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -31,7 +31,7 @@ const Home = ({ t }) => {
     dispatch(fetchProjectsAction('all', 0, 100))
 
     if (window.localStorage.getItem('token')) {
-      dispatch(fetchUserAction('me'))
+      dispatch(fetchAuthenticatedUserAction('me'))
     }
   }, [])
   const dispatch = useDispatch()
